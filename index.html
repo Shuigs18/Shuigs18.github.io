@@ -183,10 +183,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-01-25 22:02:07 / 修改时间：23:14:47" itemprop="dateCreated datePublished" datetime="2021-01-25T22:02:07+08:00">2021-01-25</time>
+              <time title="创建时间：2021-01-25 22:02:07" itemprop="dateCreated datePublished" datetime="2021-01-25T22:02:07+08:00">2021-01-25</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-01-26 10:18:18" itemprop="dateModified" datetime="2021-01-26T10:18:18+08:00">2021-01-26</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -208,7 +214,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>[toc]</p>
+          <p>本文为转载自：<a target="_blank" rel="noopener" href="https://www.zmonster.me/">ZMonster’s Blog</a></p>
 <h1 id="切片操作"><a href="#切片操作" class="headerlink" title="切片操作"></a>切片操作</h1><p>Numpy 中多维数组的切片操作与 Python 中 list 的切片操作一样，同样由 start, stop, step 三个部分组成。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">arr = np.arange(<span class="number">12</span>)</span><br><span class="line">print(<span class="string">&#x27;array is:&#x27;</span>, arr)</span><br><span class="line"></span><br><span class="line">slice_one = arr[:<span class="number">4</span>]</span><br><span class="line">print(<span class="string">&#x27;slice begins at 0 and ends at 4 is:&#x27;</span>, slice_one)</span><br><span class="line"></span><br><span class="line">slice_two = arr[<span class="number">7</span>:<span class="number">10</span>]</span><br><span class="line">print(<span class="string">&#x27;slice begins at 7 and ends at 10 is:&#x27;</span>, slice_two)</span><br><span class="line"></span><br><span class="line">slice_three = arr[<span class="number">0</span>:<span class="number">12</span>:<span class="number">4</span>]</span><br><span class="line">print(<span class="string">&#x27;slice begins at 0 and ends at 12 with step 4 is:&#x27;</span>, slice_three)</span><br></pre></td></tr></table></figure>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">array <span class="keyword">is</span>: [ <span class="number">0</span>  <span class="number">1</span>  <span class="number">2</span>  <span class="number">3</span>  <span class="number">4</span>  <span class="number">5</span>  <span class="number">6</span>  <span class="number">7</span>  <span class="number">8</span>  <span class="number">9</span> <span class="number">10</span> <span class="number">11</span>]</span><br><span class="line"><span class="built_in">slice</span> begins at <span class="number">0</span> <span class="keyword">and</span> ends at <span class="number">4</span> <span class="keyword">is</span>: [<span class="number">0</span> <span class="number">1</span> <span class="number">2</span> <span class="number">3</span>]</span><br><span class="line"><span class="built_in">slice</span> begins at <span class="number">7</span> <span class="keyword">and</span> ends at <span class="number">10</span> <span class="keyword">is</span>: [<span class="number">7</span> <span class="number">8</span> <span class="number">9</span>]</span><br><span class="line"><span class="built_in">slice</span> begins at <span class="number">0</span> <span class="keyword">and</span> ends at <span class="number">12</span> <span class="keyword">with</span> step <span class="number">4</span> <span class="keyword">is</span>: [<span class="number">0</span> <span class="number">4</span> <span class="number">8</span>]</span><br></pre></td></tr></table></figure>
