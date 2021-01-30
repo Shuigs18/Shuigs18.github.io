@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="以清华大学镜像源为例(https:&#x2F;&#x2F;pypi.tuna.tsinghua.edu.cn&#x2F;simple&#x2F;) pypi镜像临时使用1pip install -i https:&#x2F;&#x2F;pypi.tuna.tsinghua.edu.cn&#x2F;simple some_package 设为默认升级pip到最新的版本(&gt;&#x3D;10.0.0)后进行配置 12pip install pip -Upip config s">
+<meta property="og:type" content="article">
+<meta property="og:title" content="镜像设置">
+<meta property="og:url" content="http://example.com/2021/01/30/%E9%95%9C%E5%83%8F%E8%AE%BE%E7%BD%AE/index.html">
+<meta property="og:site_name" content="水广山">
+<meta property="og:description" content="以清华大学镜像源为例(https:&#x2F;&#x2F;pypi.tuna.tsinghua.edu.cn&#x2F;simple&#x2F;) pypi镜像临时使用1pip install -i https:&#x2F;&#x2F;pypi.tuna.tsinghua.edu.cn&#x2F;simple some_package 设为默认升级pip到最新的版本(&gt;&#x3D;10.0.0)后进行配置 12pip install pip -Upip config s">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-01-30T02:33:09.000Z">
+<meta property="article:modified_time" content="2021-01-30T03:30:07.893Z">
+<meta property="article:author" content="Guangshan Shui">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/01/30/%E9%95%9C%E5%83%8F%E8%AE%BE%E7%BD%AE/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>镜像设置 | 水广山</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">水广山</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/01/30/%E9%95%9C%E5%83%8F%E8%AE%BE%E7%BD%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Guangshan Shui">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="水广山">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          镜像设置
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-01-30 10:33:09 / 修改时间：11:30:07" itemprop="dateCreated datePublished" datetime="2021-01-30T10:33:09+08:00">2021-01-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>以清华大学镜像源为例(<a target="_blank" rel="noopener" href="https://pypi.tuna.tsinghua.edu.cn/simple/">https://pypi.tuna.tsinghua.edu.cn/simple/</a>)</p>
+<h1 id="pypi镜像"><a href="#pypi镜像" class="headerlink" title="pypi镜像"></a>pypi镜像</h1><h2 id="临时使用"><a href="#临时使用" class="headerlink" title="临时使用"></a>临时使用</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install -i https://pypi.tuna.tsinghua.edu.cn/simple some_package</span><br></pre></td></tr></table></figure>
+<h2 id="设为默认"><a href="#设为默认" class="headerlink" title="设为默认"></a>设为默认</h2><p>升级pip到最新的版本(&gt;=10.0.0)后进行配置</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip install pip -U</span><br><span class="line">pip config <span class="built_in">set</span> <span class="keyword">global</span>.index-url https://pypi.tuna.tsinghua.edu.cn/simple</span><br></pre></td></tr></table></figure>
+<p>如果 pip 默认源的网络连接较差，临时使用本镜像站来升级 pip：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install -i https://pypi.tuna.tsinghua.edu.cn/simple pip -U</span><br></pre></td></tr></table></figure>
+<h2 id="pip安装本地包"><a href="#pip安装本地包" class="headerlink" title="pip安装本地包"></a>pip安装本地包</h2><p><code>pip install  ～/Downloads/a.whl</code></p>
+<h2 id="国内常用PyPI镜像网站"><a href="#国内常用PyPI镜像网站" class="headerlink" title="国内常用PyPI镜像网站"></a>国内常用PyPI镜像网站</h2><p>豆瓣： <a target="_blank" rel="noopener" href="https://pypi.doubanio.com/simple/">https://pypi.doubanio.com/simple/</a> </p>
+<p>网易： <a target="_blank" rel="noopener" href="https://mirrors.163.com/pypi/simple/">https://mirrors.163.com/pypi/simple/</a> </p>
+<p>阿里云： <a target="_blank" rel="noopener" href="https://mirrors.aliyun.com/pypi/simple/">https://mirrors.aliyun.com/pypi/simple/</a> </p>
+<p>腾讯云： <a target="_blank" rel="noopener" href="https://mirrors.cloud.tencent.com/pypi/simple">https://mirrors.cloud.tencent.com/pypi/simple</a> </p>
+<p>清华大学： <a target="_blank" rel="noopener" href="https://pypi.tuna.tsinghua.edu.cn/simple/">https://pypi.tuna.tsinghua.edu.cn/simple/</a></p>
+<h2 id="conda常用命令及如何切换镜像"><a href="#conda常用命令及如何切换镜像" class="headerlink" title="conda常用命令及如何切换镜像"></a>conda常用命令及如何切换镜像</h2><h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">conda activate xxxx <span class="comment">#开启xxxx环境</span></span><br><span class="line">conda deactivate <span class="comment">#关闭环境</span></span><br><span class="line"></span><br><span class="line">conda env <span class="built_in">list</span> <span class="comment">#显示所有的虚拟环境</span></span><br><span class="line">conda info --envs <span class="comment">#显示所有的虚拟环境</span></span><br><span class="line">conda info -e <span class="comment">#显示所有已经创建的环境</span></span><br><span class="line"></span><br><span class="line">conda update -n base conda <span class="comment">#update最新版本的conda</span></span><br><span class="line"></span><br><span class="line">conda create -n xxxx python=<span class="number">3.6</span> <span class="comment">#创建python3.6的xxxx虚拟环境</span></span><br><span class="line"></span><br><span class="line">conda remove --name xxxx  --<span class="built_in">all</span> <span class="comment">#彻底删除旧环境</span></span><br><span class="line"></span><br><span class="line">conda remove -n tensorflow --<span class="built_in">all</span>  <span class="comment">#彻底删除旧环境</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#Conda是没有重命名环境的功能, 要实现这个基本需求, 可以通过克隆-删除的过程。</span></span><br><span class="line"><span class="comment">#切记不要直接mv移动环境的文件夹来重命名, 会导致一系列无法想象的错误的发生!</span></span><br><span class="line">conda create --name newname --clone oldname <span class="comment">#克隆环境</span></span><br><span class="line">conda remove --name oldname --<span class="built_in">all</span> <span class="comment">#彻底删除旧环境</span></span><br><span class="line"></span><br><span class="line">conda <span class="built_in">list</span>          <span class="comment">#查看已经安装的文件包</span></span><br><span class="line">conda <span class="built_in">list</span> -n xxx   <span class="comment">#指定查看xxx虚拟环境下安装的package</span></span><br><span class="line">conda update xxx    <span class="comment">#更新xxx文件包</span></span><br><span class="line">conda uninstall xxx <span class="comment">#卸载xxx文件包</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#conda 安装本地包</span></span><br><span class="line">conda install --use-local  ~/Downloads/a.tar.bz2</span><br><span class="line"></span><br><span class="line"><span class="comment">#显示目前conda的数据源有哪些</span></span><br><span class="line">conda config --show channels</span><br><span class="line"></span><br><span class="line"><span class="comment">#添加数据源：例如, 添加清华anaconda镜像：</span></span><br><span class="line">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/</span><br><span class="line">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/</span><br><span class="line">conda config --<span class="built_in">set</span> show_channel_urls yes</span><br><span class="line"></span><br><span class="line"><span class="comment">#删除数据源</span></span><br><span class="line">conda config --remove channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="Conda配置国内镜像源"><a href="#Conda配置国内镜像源" class="headerlink" title="Conda配置国内镜像源"></a>Conda配置国内镜像源</h2><h3 id="方法1：用vim打开文件，添加以下镜像源。推荐使用中科大镜像源"><a href="#方法1：用vim打开文件，添加以下镜像源。推荐使用中科大镜像源" class="headerlink" title="方法1：用vim打开文件，添加以下镜像源。推荐使用中科大镜像源"></a>方法1：用vim打开文件，添加以下镜像源。推荐使用中科大镜像源</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.condarc</span><br><span class="line"><span class="comment">#清华源</span></span><br><span class="line">channels:</span><br><span class="line">  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/</span><br><span class="line">  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/</span><br><span class="line">  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/</span><br><span class="line">  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/pytorch/</span><br><span class="line">ssl_verify: true</span><br><span class="line"><span class="comment">#中科大源</span></span><br><span class="line">channels:</span><br><span class="line">  - https://mirrors.ustc.edu.cn/anaconda/pkgs/main/</span><br><span class="line">  - https://mirrors.ustc.edu.cn/anaconda/pkgs/free/</span><br><span class="line">  - https://mirrors.ustc.edu.cn/anaconda/cloud/conda-forge/</span><br><span class="line">ssl_verify: true</span><br><span class="line"><span class="comment">#上交大源</span></span><br><span class="line">channels:</span><br><span class="line">  - https://mirrors.sjtug.sjtu.edu.cn/anaconda/pkgs/main/</span><br><span class="line">  - https://mirrors.sjtug.sjtu.edu.cn/anaconda/pkgs/free/</span><br><span class="line">  - https://mirrors.sjtug.sjtu.edu.cn/anaconda/cloud/conda-forge/</span><br><span class="line">ssl_verify: true</span><br></pre></td></tr></table></figure>
+<h3 id="方法2-在命令终端输入以下命令，添加镜像源"><a href="#方法2-在命令终端输入以下命令，添加镜像源" class="headerlink" title="方法2: 在命令终端输入以下命令，添加镜像源"></a>方法2: 在命令终端输入以下命令，添加镜像源</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 中科大镜像源</span></span><br><span class="line">conda config --add channels https://mirrors.ustc.edu.cn/anaconda/pkgs/main/</span><br><span class="line">conda config --add channels https://mirrors.ustc.edu.cn/anaconda/pkgs/free/</span><br><span class="line">conda config --add channels https://mirrors.ustc.edu.cn/anaconda/cloud/conda-forge/</span><br><span class="line">conda config --add channels https://mirrors.ustc.edu.cn/anaconda/cloud/msys2/</span><br><span class="line">conda config --add channels https://mirrors.ustc.edu.cn/anaconda/cloud/bioconda/</span><br><span class="line">conda config --add channels https://mirrors.ustc.edu.cn/anaconda/cloud/menpo/</span><br><span class="line">conda config --add channels https://mirrors.ustc.edu.cn/anaconda/cloud/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 阿里镜像源</span></span><br><span class="line">conda config --add channels https://mirrors.aliyun.com/pypi/simple/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 豆瓣的python的源</span></span><br><span class="line"></span><br><span class="line">conda config --add channels http://pypi.douban.com/simple/ </span><br><span class="line"></span><br><span class="line"><span class="comment"># 显示检索路径，每次安装包时会将包源路径显示出来</span></span><br><span class="line"></span><br><span class="line">conda config --<span class="built_in">set</span> show_channel_urls yes</span><br><span class="line"></span><br><span class="line">conda config --<span class="built_in">set</span> always_yes <span class="literal">True</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 显示所有镜像通道路径命令</span></span><br><span class="line"></span><br><span class="line">conda config --show channels</span><br></pre></td></tr></table></figure>
+<h3 id="遇到一些问题"><a href="#遇到一些问题" class="headerlink" title="遇到一些问题"></a><strong>遇到一些问题</strong></h3><p><strong>conda无法创建虚拟环境</strong></p>
+<p>1.通过conda创建虚拟环境出错，关掉网络代理以后，重新打开终端再试试；</p>
+<p>2.更换conda源试试；</p>
+<p><strong>注意事项</strong></p>
+<p>宁愿新安装虚拟环境，也不要区折腾python升级和降级的问题，更不要去动系统自带的python版本！！！否则操作失误，终端打不开那就尴尬了！</p>
+<h3 id="参考来源"><a href="#参考来源" class="headerlink" title="参考来源"></a>参考来源</h3><ol>
+<li>知乎：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/345251737">https://zhuanlan.zhihu.com/p/345251737</a></li>
+<li>清华镜像网站帮助：<a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/help/pypi/">https://mirrors.tuna.tsinghua.edu.cn/help/pypi/</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/01/25/Numpy%E5%A4%9A%E7%BB%B4%E6%95%B0%E7%BB%84%E7%9A%84%E5%88%87%E7%89%87%E5%92%8C%E7%B4%A2%E5%BC%95/" rel="prev" title="Numpy多维数组的切片和索引">
+      <i class="fa fa-chevron-left"></i> Numpy多维数组的切片和索引
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#pypi%E9%95%9C%E5%83%8F"><span class="nav-number">1.</span> <span class="nav-text">pypi镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%B4%E6%97%B6%E4%BD%BF%E7%94%A8"><span class="nav-number">1.1.</span> <span class="nav-text">临时使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E4%B8%BA%E9%BB%98%E8%AE%A4"><span class="nav-number">1.2.</span> <span class="nav-text">设为默认</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pip%E5%AE%89%E8%A3%85%E6%9C%AC%E5%9C%B0%E5%8C%85"><span class="nav-number">1.3.</span> <span class="nav-text">pip安装本地包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BD%E5%86%85%E5%B8%B8%E7%94%A8PyPI%E9%95%9C%E5%83%8F%E7%BD%91%E7%AB%99"><span class="nav-number">1.4.</span> <span class="nav-text">国内常用PyPI镜像网站</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#conda%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E5%8F%8A%E5%A6%82%E4%BD%95%E5%88%87%E6%8D%A2%E9%95%9C%E5%83%8F"><span class="nav-number">1.5.</span> <span class="nav-text">conda常用命令及如何切换镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">1.6.</span> <span class="nav-text">常用命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Conda%E9%85%8D%E7%BD%AE%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F%E6%BA%90"><span class="nav-number">1.7.</span> <span class="nav-text">Conda配置国内镜像源</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%951%EF%BC%9A%E7%94%A8vim%E6%89%93%E5%BC%80%E6%96%87%E4%BB%B6%EF%BC%8C%E6%B7%BB%E5%8A%A0%E4%BB%A5%E4%B8%8B%E9%95%9C%E5%83%8F%E6%BA%90%E3%80%82%E6%8E%A8%E8%8D%90%E4%BD%BF%E7%94%A8%E4%B8%AD%E7%A7%91%E5%A4%A7%E9%95%9C%E5%83%8F%E6%BA%90"><span class="nav-number">1.7.1.</span> <span class="nav-text">方法1：用vim打开文件，添加以下镜像源。推荐使用中科大镜像源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%952-%E5%9C%A8%E5%91%BD%E4%BB%A4%E7%BB%88%E7%AB%AF%E8%BE%93%E5%85%A5%E4%BB%A5%E4%B8%8B%E5%91%BD%E4%BB%A4%EF%BC%8C%E6%B7%BB%E5%8A%A0%E9%95%9C%E5%83%8F%E6%BA%90"><span class="nav-number">1.7.2.</span> <span class="nav-text">方法2: 在命令终端输入以下命令，添加镜像源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%81%87%E5%88%B0%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98"><span class="nav-number">1.7.3.</span> <span class="nav-text">遇到一些问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%9D%A5%E6%BA%90"><span class="nav-number">1.7.4.</span> <span class="nav-text">参考来源</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Guangshan Shui</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Shuigs18" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Shuigs18" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Guangshan Shui</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
