@@ -187,10 +187,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-02-09 11:36:47 / 修改时间：11:39:07" itemprop="dateCreated datePublished" datetime="2021-02-09T11:36:47+08:00">2021-02-09</time>
+              <time title="创建时间：2021-02-09 11:36:47" itemprop="dateCreated datePublished" datetime="2021-02-09T11:36:47+08:00">2021-02-09</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-02-14 17:43:04" itemprop="dateModified" datetime="2021-02-14T17:43:04+08:00">2021-02-14</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -213,28 +219,26 @@
 
       
           <h2 id="如何理解资格迹"><a href="#如何理解资格迹" class="headerlink" title="如何理解资格迹"></a>如何理解资格迹</h2><p>考虑这样一个回合$S_0,A_0,R_1,S_1,A_1,…,R_n,S_n,A_n$</p>
-<p>我们知道对于 $(S_0,A_0)$计算$q_(S_0,A_0)$，可以用$U(S_0，A_0)=R_1+q(S_1,A_1)$近似为真实值去更新$q_(S_0,A_0)$，这个时候时序误差为$TD_{error}=U(S_0，A_0)-q(S_0,A_0)$，时序误差所包含的信息全部用来更新$q_(S_0,A_0)$</p>
+<p>我们知道对于 $(S_0,A_0)$计算$q_(S_0,A_0)$，可以用$U(S_0,A_0)=R_1+q(S_1,A_1)$近似为真实值去更新$q_(S_0,A_0)$，这个时候时序误差为$TD_{error}=U(S_0,A_0)-q(S_0,A_0)$，时序误差所包含的信息全部用来更新$q_(S_0,A_0)$</p>
 <p>$(S_5,A_5)$时，</p>
 <p>$U(S_5,A_5)=R_6+\gamma q(S_6,A_6)$</p>
-<p>$U(S_0，A_0)=R_1+\gamma R_2+\gamma ^2R_3+\gamma ^3R_4+\gamma ^4R_5+\gamma ^5U(S_5,A_5) $</p>
+<p>$U(S_0,A_0)=R_1+\gamma R_2+\gamma ^2R_3+\gamma ^3R_4+\gamma ^4R_5+\gamma ^5U(S_5,A_5) $</p>
 <p>这个时候$(S_5,A_5)$处的时序误差对于更新 $(S_0,A_0)$处的$q_(S_0,A_0)$所产生的作用是$\gamma ^5 *TD_{error}$</p>
 <p>从上式可以看出与$(S_0,A_0)$状态相距越远的$(S_k,A_k)$所产生的时序误差对于$(S_0,A_0)$所起的作用就越小，所以间隔步数每增加一步，前面的每个动作状态对的资格迹都要进行衰减.</p>
 <p>比如在$t=4$时，</p>
 <p>$U(S_0,A_0):\gamma^4,U(S_1,A_1):\gamma^3，U(S_2,A_2):\gamma^2，U(S_3,A_3):\gamma$。</p>
-<p>前进一步，$t=5$时，$U(S_0,A_0):\gamma^5,U(S_1,A_1):\gamma^4，U(S_2,A_2):\gamma^3，U(S_3,A_3):\gamma^2，U(S_4,A_4):\gamma$</p>
+<p>前进一步，$t=5$时,</p>
+<p>$U(S_0,A_0):\gamma^5,U(S_1,A_1):\gamma^4，U(S_2,A_2):\gamma^3，U(S_3,A_3):\gamma^2，U(S_4,A_4):\gamma$</p>
 <p>而对于$TD(\lambda)$ 来说</p>
-<p>$U(S_0，A_0)=R_1+q(S_1,A_1)\qquad 1-\lambda$</p>
-<p>$U(S_0，A_0)=R_1+\gamma U(S_1,A_1) \qquad (1-\lambda)\lambda$</p>
-<p>$U(S_0，A_0)=R_1+\gamma R_2+\gamma ^2 U(S_2,A_2) \qquad (1-\lambda)\lambda ^2$</p>
+<p>$U(S_0,A_0)=R_1+q(S_1,A_1)\qquad 1-\lambda$</p>
+<p>$U(S_0,A_0)=R_1+\gamma U(S_1,A_1) \qquad (1-\lambda)\lambda$</p>
+<p>$U(S_0,A_0)=R_1+\gamma R_2+\gamma ^2 U(S_2,A_2) \qquad (1-\lambda)\lambda ^2$</p>
 <p>…….</p>
 <p>所以其间隔步数每增加一步，当前状态动作价值产生的时序误差，用到更新前面的状态动作价值时要相应的衰减对应$\gamma\lambda$次幂。</p>
 <p>考虑资格迹其实看起来很合理，因为当回合轨迹逐渐延伸，不仅当前的动作状态价值需要更新，由于新的信息的出现，又会使得之前已经更新的动作状态价值，和我们的$U$(类似机器学习的目标)之间重新产生新的误差，我们理应将这部分考虑到损失函数中，进行梯度更新。</p>
-<h2 id="带资格迹的梯度下降"><a href="#带资格迹的梯度下降" class="headerlink" title="带资格迹的梯度下降"></a>带资格迹的梯度下降</h2><blockquote>
-<p>《强化学习导论》Richard S.Sutton</p>
-<p>资格迹$\mathbf{z}<em>t$是一个和权值向量$\mathbf{w}<em>t$ 同维度的向量，在$TD(\lambda)$中，资格迹向量被初始化为零，然后在每一步累加价值函数的梯度，以$\gamma\lambda$<br>$$<br>\begin{align}<br>\mathbf{z}</em>{-1} &amp;= \mathbf{0}, \<br>\mathbf{z_t} &amp;= \gamma\lambda\mathbf{z_{t-1}}+\nabla\hat{v}(S_t,\mathbf{w_t}), &amp;0 \leq t\leq T<br>\end{align}<br>$$<br>某一时刻的单步时序差分误差为<br>$$<br>\delta_t=R_{t+1}+\gamma\hat{v}(S</em>{t+1},\mathbf{w_t})-\hat{v}(S_t,\mathbf{w_t})<br>$$<br>在$TD(\lambda)$中，权值向量每一步的更新正比于时序差分的标量的误差和资格迹。<br>$$<br>\mathbf{w_{t+1}}=\mathbf{w_t}+\alpha\delta_t\mathbf{z_t}<br>$$</p>
-</blockquote>
-<p>当时看资格迹时候特别迷这一部分，其实自己稍微推导两步就明白了。这里的资格迹其实就是把后面的梯度中的学习率和时序误差提出来剩下的内容。因为是利用函数近似，所以会包含价值的梯度。具体推导如下：</p>
-<p>当$t=0$时：<br>$$<br>\begin{align}<br>U(S_0) &amp;= R_1+\gamma v(S_1,\mathbf{w_0}) \<br>Loss &amp;= [U(S_0)-v(S_0,\mathbf{w_0})]^2 \<br>\mathbf{w_1} &amp;= \mathbf{w_0}+\alpha[U(S_0)-v(S_0,\mathbf{w_0})]\nabla v(S_0,\mathbf{w_0}) \<br>             &amp;= \mathbf{w_0}+\alpha\delta_0\nabla v(S_0,\mathbf{w_0}) \<br>\mathbf{z_0} &amp;=\mathbf{0} + \nabla v(S_0,\mathbf{w_0})<br>\end{align}<br>$$<br>从上式可以看出，资格迹和权值向量是同维度的。</p>
+<h2 id="带资格迹的梯度下降"><a href="#带资格迹的梯度下降" class="headerlink" title="带资格迹的梯度下降"></a>带资格迹的梯度下降</h2><p>《强化学习导论》Richard S.Sutton</p>
+<p>资格迹$\mathbf{z}<em>t$是一个和权值向量$\mathbf{w}<em>t$ 同维度的向量，在$TD(\lambda)$中，资格迹向量被初始化为零，然后在每一步累加价值函数的梯度，以$\gamma\lambda$<br>$$<br>\begin{align}<br>\mathbf{z}</em>{-1} &amp;= \mathbf{0}, \<br>\mathbf{z_t} &amp;= \gamma\lambda\mathbf{z_{t-1}}+\nabla\hat{v}(S_t,\mathbf{w_t}), &amp;0 \leq t\leq T<br>\end{align}<br>$$<br>某一时刻的单步时序差分误差为<br>$$<br>\delta_t=R_{t+1}+\gamma\hat{v}(S</em>{t+1},\mathbf{w_t})-\hat{v}(S_t,\mathbf{w_t})<br>$$<br>在$TD(\lambda)$中，权值向量每一步的更新正比于时序差分的标量的误差和资格迹。<br>$$<br>\mathbf{w_{t+1}}=\mathbf{w_t}+\alpha\delta_t\mathbf{z_t}<br>$$<br>当时看资格迹时候特别迷这一部分，其实自己稍微推导两个回合就明白了。这里的资格迹其实就是把后面的梯度中的学习率和时序误差提出来剩下的内容。因为是利用函数近似，所以会包含价值的梯度。具体推导两步。</p>
+<p>当$t=0$时：<br>$$<br>\begin{align}<br>U(S_0) &amp;= R_1+\gamma v(S_1,\mathbf{w_0}) \<br>Loss &amp;= [U(S_0)-v(S_0,\mathbf{w_0})]^2 \<br>\mathbf{w_1} &amp;= \mathbf{w_0}+\alpha[U(S_0)-v(S_0,\mathbf{w_0})]\nabla v(S_0,\mathbf{w_0}) \<br>             &amp;= \mathbf{w_0}+\alpha\delta_0\nabla v(S_0,\mathbf{w_0}) \<br>\mathbf{z_0} &amp;=\mathbf{0} + \nabla v(S_0,\mathbf{w_0})<br>\end{align}<br>$$<br>从上式资格迹可以看出，其和权值向量是同维度的。</p>
 <p>当$t=1$时：<br>$$<br>U(S_1)=R_2+\gamma v(S_2,\mathbf{w_1})<br>$$<br>这时时序误差为$\delta_1=U(S_1)-v(S_1)$，而$U(S_0) = R_1 + \gamma U(S_1)$，所以在$TD(\lambda)$下，$U(S_0)$和$v(S_0,\mathbf{w_1})$的误差为$\gamma\lambda\delta_1$，这两部分的误差理应都考虑，这个时候的损失函数就变为<br>$$<br>Loss=[U(S_0)-v(S_0,\mathbf{w_1})]^2 + [U(S_1)-v(S_1,\mathbf{w_1})]^2<br>$$<br>进行梯度更新<br>$$<br>\begin{align}<br>\mathbf{w_2} &amp;= \mathbf{w_1}+\alpha[U(S_0)-v(S_0,\mathbf{w_1})]\nabla v(S_0,\mathbf{w_1})+ \alpha[U(S_1)-v(S_1,\mathbf{w_1})]\nabla v(S_1,\mathbf{w_1})\<br>             &amp;= \mathbf{w_1}+\alpha\gamma\lambda\delta_1\nabla v(S_0,\mathbf{w_1}) +\alpha\delta_1\nabla v(S_1,\mathbf{w_1})\</p>
 <p>\end{align}<br>$$<br>把学习率和时序误差$\delta_1$提出来，得到资格迹<br>$$<br>\mathbf{z_1} =\gamma\lambda\nabla v(S_0,\mathbf{w_1}) + \nabla v(S_1,\mathbf{w_1})<br>$$<br>由于$\nabla v(S_0,\mathbf{w_0})=\nabla v(S_0,\mathbf{w_1})$，所以<br>$$<br>\mathbf{z_1} =\gamma\lambda\mathbf{z_0} + \nabla v(S_1,\mathbf{w_1})<br>$$<br>以次往下更新……</p>
 
@@ -588,72 +592,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2020/12/25/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Guangshan Shui">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="水广山">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/12/25/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-12-25 11:16:23" itemprop="dateCreated datePublished" datetime="2020-12-25T11:16:23+08:00">2020-12-25</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
 
@@ -720,7 +658,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-count">4</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
