@@ -20,20 +20,20 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="如何理解资格迹考虑这样一个回合$S_0,A_0,R_1,S_1,A_1,…,R_n,S_n,A_n$ 我们知道对于 $(S_0,A_0)$计算$q_(S_0,A_0)$，可以用$U(S_0,A_0)&#x3D;R_1+q(S_1,A_1)$近似为真实值去更新$q_(S_0,A_0)$，这个时候时序误差为$TD_{error}&#x3D;U(S_0,A_0)-q(S_0,A_0)$，时序误差所包含的信息全部用来更新$q">
+  <meta name="description" content="1. 有&#x2F;无模型学习 有模型学习 方法：动态规划  无模型 方法：蒙特卡洛、时序差分   2. 同&#x2F;异策学习 同策回合更新（策略$\pi$和环境交互得到&#x3D;&#x3D;完整轨迹&#x3D;&#x3D;，然后学习更新价值函数$V^{\pi}$） 每次访问回合更新 首次访问回合更新 带起始探索的同策回合更新（避免陷入局部最优） 基于柔性策略的同策回合更新（避免陷入局部最优）   异策回合更新（行为策略$\pi’$和环境交互得到&#x3D;&#x3D;完">
 <meta property="og:type" content="article">
-<meta property="og:title" content="资格迹">
-<meta property="og:url" content="http://example.com/2021/02/09/%E8%B5%84%E6%A0%BC%E8%BF%B9/index.html">
+<meta property="og:title" content="RL总结">
+<meta property="og:url" content="http://example.com/2021/02/16/RL%E6%80%BB%E7%BB%93/index.html">
 <meta property="og:site_name" content="水广山">
-<meta property="og:description" content="如何理解资格迹考虑这样一个回合$S_0,A_0,R_1,S_1,A_1,…,R_n,S_n,A_n$ 我们知道对于 $(S_0,A_0)$计算$q_(S_0,A_0)$，可以用$U(S_0,A_0)&#x3D;R_1+q(S_1,A_1)$近似为真实值去更新$q_(S_0,A_0)$，这个时候时序误差为$TD_{error}&#x3D;U(S_0,A_0)-q(S_0,A_0)$，时序误差所包含的信息全部用来更新$q">
+<meta property="og:description" content="1. 有&#x2F;无模型学习 有模型学习 方法：动态规划  无模型 方法：蒙特卡洛、时序差分   2. 同&#x2F;异策学习 同策回合更新（策略$\pi$和环境交互得到&#x3D;&#x3D;完整轨迹&#x3D;&#x3D;，然后学习更新价值函数$V^{\pi}$） 每次访问回合更新 首次访问回合更新 带起始探索的同策回合更新（避免陷入局部最优） 基于柔性策略的同策回合更新（避免陷入局部最优）   异策回合更新（行为策略$\pi’$和环境交互得到&#x3D;&#x3D;完">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-02-09T03:36:47.000Z">
-<meta property="article:modified_time" content="2021-02-14T09:43:04.635Z">
+<meta property="article:published_time" content="2021-02-16T08:59:41.000Z">
+<meta property="article:modified_time" content="2021-02-16T09:00:39.966Z">
 <meta property="article:author" content="Guangshan Shui">
 <meta property="article:tag" content="RL">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/2021/02/09/%E8%B5%84%E6%A0%BC%E8%BF%B9/">
+<link rel="canonical" href="http://example.com/2021/02/16/RL%E6%80%BB%E7%BB%93/">
 
 
 <script id="page-configurations">
@@ -46,7 +46,7 @@
   };
 </script>
 
-  <title>资格迹 | 水广山</title>
+  <title>RL总结 | 水广山</title>
   
 
 
@@ -170,7 +170,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/02/09/%E8%B5%84%E6%A0%BC%E8%BF%B9/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/02/16/RL%E6%80%BB%E7%BB%93/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -183,7 +183,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          资格迹
+          RL总结
         </h1>
 
         <div class="post-meta">
@@ -192,16 +192,10 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2021-02-09 11:36:47" itemprop="dateCreated datePublished" datetime="2021-02-09T11:36:47+08:00">2021-02-09</time>
+              <time title="创建时间：2021-02-16 16:59:41 / 修改时间：17:00:39" itemprop="dateCreated datePublished" datetime="2021-02-16T16:59:41+08:00">2021-02-16</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-02-14 17:43:04" itemprop="dateModified" datetime="2021-02-14T17:43:04+08:00">2021-02-14</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -223,30 +217,139 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="如何理解资格迹"><a href="#如何理解资格迹" class="headerlink" title="如何理解资格迹"></a>如何理解资格迹</h2><p>考虑这样一个回合$S_0,A_0,R_1,S_1,A_1,…,R_n,S_n,A_n$</p>
-<p>我们知道对于 $(S_0,A_0)$计算$q_(S_0,A_0)$，可以用$U(S_0,A_0)=R_1+q(S_1,A_1)$近似为真实值去更新$q_(S_0,A_0)$，这个时候时序误差为$TD_{error}=U(S_0,A_0)-q(S_0,A_0)$，时序误差所包含的信息全部用来更新$q_(S_0,A_0)$</p>
-<p>$(S_5,A_5)$时，</p>
-<p>$U(S_5,A_5)=R_6+\gamma q(S_6,A_6)$</p>
-<p>$U(S_0,A_0)=R_1+\gamma R_2+\gamma ^2R_3+\gamma ^3R_4+\gamma ^4R_5+\gamma ^5U(S_5,A_5) $</p>
-<p>这个时候$(S_5,A_5)$处的时序误差对于更新 $(S_0,A_0)$处的$q_(S_0,A_0)$所产生的作用是$\gamma ^5 *TD_{error}$</p>
-<p>从上式可以看出与$(S_0,A_0)$状态相距越远的$(S_k,A_k)$所产生的时序误差对于$(S_0,A_0)$所起的作用就越小，所以间隔步数每增加一步，前面的每个动作状态对的资格迹都要进行衰减.</p>
-<p>比如在$t=4$时，</p>
-<p>$U(S_0,A_0):\gamma^4,U(S_1,A_1):\gamma^3，U(S_2,A_2):\gamma^2，U(S_3,A_3):\gamma$。</p>
-<p>前进一步，$t=5$时,</p>
-<p>$U(S_0,A_0):\gamma^5,U(S_1,A_1):\gamma^4，U(S_2,A_2):\gamma^3，U(S_3,A_3):\gamma^2，U(S_4,A_4):\gamma$</p>
-<p>而对于$TD(\lambda)$ 来说</p>
-<p>$U(S_0,A_0)=R_1+q(S_1,A_1)\qquad 1-\lambda$</p>
-<p>$U(S_0,A_0)=R_1+\gamma U(S_1,A_1) \qquad (1-\lambda)\lambda$</p>
-<p>$U(S_0,A_0)=R_1+\gamma R_2+\gamma ^2 U(S_2,A_2) \qquad (1-\lambda)\lambda ^2$</p>
-<p>…….</p>
-<p>所以其间隔步数每增加一步，当前状态动作价值产生的时序误差，用到更新前面的状态动作价值时要相应的衰减对应$\gamma\lambda$次幂。</p>
-<p>考虑资格迹其实看起来很合理，因为当回合轨迹逐渐延伸，不仅当前的动作状态价值需要更新，由于新的信息的出现，又会使得之前已经更新的动作状态价值，和我们的$U$(类似机器学习的目标)之间重新产生新的误差，我们理应将这部分考虑到损失函数中，进行梯度更新。</p>
-<h2 id="带资格迹的梯度下降"><a href="#带资格迹的梯度下降" class="headerlink" title="带资格迹的梯度下降"></a>带资格迹的梯度下降</h2><p>《强化学习导论》Richard S.Sutton</p>
-<p>资格迹$\mathbf{z}<em>t$是一个和权值向量$\mathbf{w}<em>t$ 同维度的向量，在$TD(\lambda)$中，资格迹向量被初始化为零，然后在每一步累加价值函数的梯度，以$\gamma\lambda$<br>$$<br>\begin{align}<br>\mathbf{z}</em>{-1} &amp;= \mathbf{0}, \<br>\mathbf{z_t} &amp;= \gamma\lambda\mathbf{z_{t-1}}+\nabla\hat{v}(S_t,\mathbf{w_t}), &amp;0 \leq t\leq T<br>\end{align}<br>$$<br>某一时刻的单步时序差分误差为<br>$$<br>\delta_t=R_{t+1}+\gamma\hat{v}(S</em>{t+1},\mathbf{w_t})-\hat{v}(S_t,\mathbf{w_t})<br>$$<br>在$TD(\lambda)$中，权值向量每一步的更新正比于时序差分的标量的误差和资格迹。<br>$$<br>\mathbf{w_{t+1}}=\mathbf{w_t}+\alpha\delta_t\mathbf{z_t}<br>$$<br>当时看资格迹时候特别迷这一部分，其实自己稍微推导两个回合就明白了。这里的资格迹其实就是把后面的梯度中的学习率和时序误差提出来剩下的内容。因为是利用函数近似，所以会包含价值的梯度。具体推导两步。</p>
-<p>当$t=0$时：<br>$$<br>\begin{align}<br>U(S_0) &amp;= R_1+\gamma v(S_1,\mathbf{w_0}) \<br>Loss &amp;= [U(S_0)-v(S_0,\mathbf{w_0})]^2 \<br>\mathbf{w_1} &amp;= \mathbf{w_0}+\alpha[U(S_0)-v(S_0,\mathbf{w_0})]\nabla v(S_0,\mathbf{w_0}) \<br>             &amp;= \mathbf{w_0}+\alpha\delta_0\nabla v(S_0,\mathbf{w_0}) \<br>\mathbf{z_0} &amp;=\mathbf{0} + \nabla v(S_0,\mathbf{w_0})<br>\end{align}<br>$$<br>从上式资格迹可以看出，其和权值向量是同维度的。</p>
-<p>当$t=1$时：<br>$$<br>U(S_1)=R_2+\gamma v(S_2,\mathbf{w_1})<br>$$<br>这时时序误差为$\delta_1=U(S_1)-v(S_1)$，而$U(S_0) = R_1 + \gamma U(S_1)$，所以在$TD(\lambda)$下，$U(S_0)$和$v(S_0,\mathbf{w_1})$的误差为$\gamma\lambda\delta_1$，这两部分的误差理应都考虑，这个时候的损失函数就变为<br>$$<br>Loss=[U(S_0)-v(S_0,\mathbf{w_1})]^2 + [U(S_1)-v(S_1,\mathbf{w_1})]^2<br>$$<br>进行梯度更新<br>$$<br>\begin{align}<br>\mathbf{w_2} &amp;= \mathbf{w_1}+\alpha[U(S_0)-v(S_0,\mathbf{w_1})]\nabla v(S_0,\mathbf{w_1})+ \alpha[U(S_1)-v(S_1,\mathbf{w_1})]\nabla v(S_1,\mathbf{w_1})\<br>             &amp;= \mathbf{w_1}+\alpha\gamma\lambda\delta_1\nabla v(S_0,\mathbf{w_1}) +\alpha\delta_1\nabla v(S_1,\mathbf{w_1})\</p>
-<p>\end{align}<br>$$<br>把学习率和时序误差$\delta_1$提出来，得到资格迹<br>$$<br>\mathbf{z_1} =\gamma\lambda\nabla v(S_0,\mathbf{w_1}) + \nabla v(S_1,\mathbf{w_1})<br>$$<br>由于$\nabla v(S_0,\mathbf{w_0})=\nabla v(S_0,\mathbf{w_1})$，所以<br>$$<br>\mathbf{z_1} =\gamma\lambda\mathbf{z_0} + \nabla v(S_1,\mathbf{w_1})<br>$$<br>以次往下更新……</p>
-
+        <h2 id="1-有-无模型学习"><a href="#1-有-无模型学习" class="headerlink" title="1. 有/无模型学习"></a>1. 有/无模型学习</h2><ul>
+<li><p>有模型学习</p>
+<p>方法：动态规划</p>
+</li>
+<li><p>无模型</p>
+<p>方法：蒙特卡洛、时序差分</p>
+</li>
+</ul>
+<h2 id="2-同-异策学习"><a href="#2-同-异策学习" class="headerlink" title="2. 同/异策学习"></a>2. 同/异策学习</h2><ul>
+<li>同策<strong>回合更新</strong>（策略$\pi$和环境交互得到==完整轨迹==，然后学习更新价值函数$V^{\pi}$）<ul>
+<li>每次访问回合更新</li>
+<li>首次访问回合更新</li>
+<li>带起始探索的同策回合更新（避免陷入局部最优）</li>
+<li>基于柔性策略的同策回合更新（避免陷入局部最优）</li>
+</ul>
+</li>
+<li>异策<strong>回合更新</strong>（<strong>行为策略</strong>$\pi’$和环境交互得到==完整轨迹==，<strong>目标策略</strong>$\pi$学习更新价值函数$V^{\pi}$）<ul>
+<li>重要性采样 李宏毅讲的很好</li>
+<li>异策回合更新策略评估  # 利用行为策略估计目标策略的动作状态价值对函数和状态价值对函数</li>
+<li>异策回合更新最优策略的求解  # 评估 + 改进  改进部分是依据每个状态下的最大价值动作。</li>
+</ul>
+</li>
+</ul>
+<h2 id="3-回合更新-时序差分更新"><a href="#3-回合更新-时序差分更新" class="headerlink" title="3. 回合更新/时序差分更新"></a>3. 回合更新/时序差分更新</h2><ul>
+<li>回合更新（无偏差但方差大，和环境完整的交互一个回合）<ul>
+<li>利用蒙特卡洛方法，对完整的G进行无偏差估计，但是方差较大</li>
+</ul>
+</li>
+<li>时序差分更新（有偏差，但方差小，收敛快，n步就和环境交互n次）<ul>
+<li>同策，策略$\pi$生成轨迹，然后策略$\pi$学习更新$q(s,·)$，然后根据q值更新策略<ul>
+<li>$TD(\lambda)$(除极端的无穷外是时序差分，同策)</li>
+<li>SARSA算法 = 单/多步时序差分（策略评估）+ 策略改进   （同策）</li>
+<li>期望SARSA算法：$U_t=R_{t+1}+\gamma \sum_{a\in \mathcal{A}}\pi(a|S_{t+1})q(S_{t+1},a)$ 也有单步和多步  （同策）</li>
+</ul>
+</li>
+<li>异策，行为策略$b$和环境进行交互得到轨迹，然后依据此轨迹对策略$\pi$进行学习更新q值，然后根据q值对策略进行更新<ul>
+<li>单步/多步时序差分</li>
+<li>SARSA算法/期望SARSA算法</li>
+<li>Q-learning</li>
+<li>Double Q-learning</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>资格迹<ul>
+<li>资格迹和以上时序差分策略都可以结合，不管是同策还是异策。</li>
+</ul>
+</li>
+</ul>
+<h2 id="4-基于价值-策略-二者结合"><a href="#4-基于价值-策略-二者结合" class="headerlink" title="4. 基于价值/策略/二者结合"></a>4. 基于价值/策略/二者结合</h2><ul>
+<li><p>基于<strong>价值</strong>的</p>
+<ul>
+<li>蒙特卡洛方法估计G</li>
+<li>动态规划</li>
+<li>$TD(\lambda)$</li>
+<li>SARSA</li>
+<li>Q-learning</li>
+<li>Double Q-learning</li>
+</ul>
+</li>
+<li><p>基于<strong>策略</strong>（回合更新，利用策略交互不断得到完整轨迹，多个回合更新目标是使策略$\pi$的期望$E(G)$最大</p>
+<ul>
+<li>同策回合更新策略梯度算法</li>
+<li>异策回合更新策略梯度算法</li>
+</ul>
+</li>
+<li><p><strong>执行者/评论者</strong>方法 = 价值更新 + 策略更新 (价值更新部分使用深度强化学习方法+单步时序差分，策略更新也是用深度强化学习方法)</p>
+<ul>
+<li><p><strong>动作价值</strong>执行者评论者算法 $E(\Psi_t \nabla \ln\pi(a_t|s_t;\theta)), \Psi_t=\gamma^tq_{\pi}(s_t,a_t)$</p>
+</li>
+<li><p><strong>A2C-优势</strong>执行者/评论者算法 $\Psi_t=\gamma^t[q_{\pi}(s_t,a_t)-v_{\pi}(s_t)]$</p>
+</li>
+<li><p><strong>时序差分</strong>执行者/评论者算法 $\Psi_t=\gamma^t[r_{t+1}+\gamma v_{\pi}(s_{t+1})-v_{\pi}(s_t)]$</p>
+</li>
+<li><p><strong>A3C-异步</strong>优势执行者/评论者算法；利用多个agent同时搜集经验更新自己的参数并传给一个总的agent，可以单/多步时序差分</p>
+</li>
+<li><p>带<strong>资格迹</strong>的执行者评论者算法</p>
+</li>
+<li><p>基于<strong>代理优势</strong>的同策算法</p>
+<ul>
+<li><strong>邻近策略优化PPO2</strong>，在目标中添加描述分布差异的指标，$E_{\pi(\theta_{old})}[\min(\frac{\pi(A_t|S_t;\theta_{new})}{\pi(A_t|S_t;\theta_{old})}a_{\pi(\theta_{old})}(S_a,A_t), a_{\pi(\theta_{old})}(S_a,A_t)+\varepsilon|a_{\pi(\theta_{old})}(S_a,A_t)|)]$</li>
+</ul>
+</li>
+<li><p><strong>信任域算法</strong></p>
+<ul>
+<li><p><strong>自然策略梯度算法NPG</strong>，最大化代理优势，并添加约束条件，KL散度小于$\delta$，但NPG是对目标函数进行泰勒一阶近似，约束条件进行泰勒二阶近似。对近似后的问题进行求解。</p>
+<p>$\mathbf{\theta} \leftarrow \mathbf{\theta} +  \sqrt{\frac{2\delta}{\mathbf{g^TF^{-1}g}}}\mathbf{F^{-1}g}$</p>
+</li>
+<li><p>带共轭梯度的自然策略梯度算法</p>
+<p>利用共轭梯度算法求解$\mathbf{F^{-1}g}，\mathbf{Fx=g}$，$\mathbf{\theta} \leftarrow \mathbf{\theta} +  \sqrt{\frac{2\delta}{\mathbf{x^TFx}}}\mathbf{x}$</p>
+</li>
+<li><p><strong>信赖域策略优化TRPO</strong>，在NPG的基础上修改得到，因为其近似问题可能不一定导致问题有最优解，在个别情况下可能使情况更糟，TRPO对迭代式进行改进<br>$$<br>\boldsymbol{\theta_{k+1} = \theta_k}+\alpha^j \sqrt{\frac{2\delta}{\boldsymbol{[x([\theta_k])^T]Fx([\theta_k])}}}\boldsymbol{x([\theta_k])}<br>$$<br>其中$\alpha$是学习参数，$j$是某个非负整数，对于自然策略梯度$j$总是0，TRPO用一下方法确定$j$的值：从非负整数d到0，1，2…中依次寻找首个满足期望KL散度约束并且能够提升代理梯度的值。不过由于一般近似的不错，所以一般为0，个别情况为1，其他值几乎没有。</p>
+</li>
+<li><p><strong>Kronecker因子信任域执行者/评论者算法 ACKTR</strong>，将Kronecker因子近似曲率算法用到信任域策略优化算法中，减少计算量</p>
+</li>
+</ul>
+</li>
+<li><p>重要性采样异策执行者/评论者算法</p>
+<ul>
+<li><strong>异策</strong>执行者/评论者算法，将目标期望$E_{\pi(\boldsymbol{\theta})}(\Psi_t \nabla \ln\pi(a_t|s_t;\theta))$，变为$E_b(\frac{\pi(A_t|S_t;\boldsymbol{\theta})}{b(A_t|S_t)}\Psi_t \nabla \ln\pi(a_t|s_t;\theta))$</li>
+<li><strong>带经验回放的异策</strong>执行者/评论者算法（<strong>ACER</strong>）</li>
+</ul>
+</li>
+<li><p><strong>柔性执行者/评论者算法（SAC）</strong></p>
+</li>
+<li><p>确定性策略</p>
+<ul>
+<li>同策确定性算法</li>
+<li>异策确定性算法</li>
+<li><strong>深度确定性策略梯度算法(DDPG)</strong></li>
+<li><strong>双重延迟深度确定性策略梯度算法(TD3)</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="5-深度强化学习-非深度强化学习"><a href="#5-深度强化学习-非深度强化学习" class="headerlink" title="5. 深度强化学习/非深度强化学习"></a>5. 深度强化学习/非深度强化学习</h2><ul>
+<li>深度Q学习</li>
+<li>双重深度Q网络</li>
+<li>对偶深度Q网络<ul>
+<li>对于某个状态S，有些action可能采样不到，但通过对偶深度Q网络也可以更新</li>
+</ul>
+</li>
+<li>Noise Net<ul>
+<li>对采样的Q网络的参数添加噪声，探索</li>
+</ul>
+</li>
+<li>Distributional Q_function<ul>
+<li>该方法认为Q(s, a)有一个分布，即相同的状态和行为的价值，是一个分布，用神经网络估计这个分布</li>
+</ul>
+</li>
+</ul>
+<h2 id="6-离线学习-在线学习（待更）"><a href="#6-离线学习-在线学习（待更）" class="headerlink" title="6. 离线学习/在线学习（待更）"></a>6. 离线学习/在线学习（待更）</h2>
     </div>
 
     
@@ -264,13 +367,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/02/06/DP-MC-TD/" rel="prev" title="DP\MC\TD">
-      <i class="fa fa-chevron-left"></i> DP\MC\TD
+    <a href="/2021/02/09/%E8%B5%84%E6%A0%BC%E8%BF%B9/" rel="prev" title="资格迹">
+      <i class="fa fa-chevron-left"></i> 资格迹
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2021/02/16/RL%E6%80%BB%E7%BB%93/" rel="next" title="RL总结">
-      RL总结 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -329,7 +429,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3%E8%B5%84%E6%A0%BC%E8%BF%B9"><span class="nav-number">1.</span> <span class="nav-text">如何理解资格迹</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%A6%E8%B5%84%E6%A0%BC%E8%BF%B9%E7%9A%84%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D"><span class="nav-number">2.</span> <span class="nav-text">带资格迹的梯度下降</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%9C%89-%E6%97%A0%E6%A8%A1%E5%9E%8B%E5%AD%A6%E4%B9%A0"><span class="nav-number">1.</span> <span class="nav-text">1. 有&#x2F;无模型学习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%90%8C-%E5%BC%82%E7%AD%96%E5%AD%A6%E4%B9%A0"><span class="nav-number">2.</span> <span class="nav-text">2. 同&#x2F;异策学习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%9B%9E%E5%90%88%E6%9B%B4%E6%96%B0-%E6%97%B6%E5%BA%8F%E5%B7%AE%E5%88%86%E6%9B%B4%E6%96%B0"><span class="nav-number">3.</span> <span class="nav-text">3. 回合更新&#x2F;时序差分更新</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%9F%BA%E4%BA%8E%E4%BB%B7%E5%80%BC-%E7%AD%96%E7%95%A5-%E4%BA%8C%E8%80%85%E7%BB%93%E5%90%88"><span class="nav-number">4.</span> <span class="nav-text">4. 基于价值&#x2F;策略&#x2F;二者结合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0-%E9%9D%9E%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0"><span class="nav-number">5.</span> <span class="nav-text">5. 深度强化学习&#x2F;非深度强化学习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E7%A6%BB%E7%BA%BF%E5%AD%A6%E4%B9%A0-%E5%9C%A8%E7%BA%BF%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%BE%85%E6%9B%B4%EF%BC%89"><span class="nav-number">6.</span> <span class="nav-text">6. 离线学习&#x2F;在线学习（待更）</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
