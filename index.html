@@ -394,7 +394,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-02-17 09:42:43" itemprop="dateModified" datetime="2021-02-17T09:42:43+08:00">2021-02-17</time>
+                <time title="修改时间：2021-02-17 09:50:44" itemprop="dateModified" datetime="2021-02-17T09:50:44+08:00">2021-02-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -436,7 +436,7 @@
 <p>所以其间隔步数每增加一步，当前状态动作价值产生的时序误差，用到更新前面的状态动作价值时要相应的衰减对应$\gamma\lambda$次幂。</p>
 <p>考虑资格迹其实看起来很合理，因为当回合轨迹逐渐延伸，不仅当前的动作状态价值需要更新，由于新的信息的出现，又会使得之前已经更新的动作状态价值，和我们的$U$(类似机器学习的目标)之间重新产生新的误差，我们理应将这部分考虑到损失函数中，进行梯度更新。</p>
 <h2 id="带资格迹的梯度下降"><a href="#带资格迹的梯度下降" class="headerlink" title="带资格迹的梯度下降"></a>带资格迹的梯度下降</h2><p>《强化学习导论》Richard S.Sutton：资格迹$\mathbf{z}_t$是一个和权值向量$\mathbf{w}_t$ 同维度的向量，在$TD(\lambda)$中，资格迹向量被初始化为零，然后在每一步累加价值函数的梯度，以$\gamma\lambda$</p>
-<p>$$<br>\begin{align}<br>\mathbf{z}<em>{-1} &amp;= \mathbf{0}, \\<br>\mathbf{z_t} &amp;= \gamma\lambda\mathbf{z_{t-1}}+\nabla\hat{v}(S_t,\mathbf{w_t}), 0 \leq t\leq T<br>\end{align}<br>$$<br>某一时刻的单步时序差分误差为<br>$$<br>\delta_t=R_{t+1}+\gamma\hat{v}(S</em>{t+1},\mathbf{w_t})-\hat{v}(S_t,\mathbf{w_t})<br>$$<br>在$TD(\lambda)$中，权值向量每一步的更新正比于时序差分的标量的误差和资格迹。<br>$$<br>\mathbf{w_{t+1}}=\mathbf{w_t}+\alpha\delta_t\mathbf{z_t}<br>$$<br>当时看资格迹时候特别迷这一部分，其实自己稍微推导两个回合就明白了。这里的资格迹其实就是把后面的梯度中的学习率和时序误差提出来剩下的内容。因为是利用函数近似，所以会包含价值的梯度。具体推导两步。</p>
+<p>$$<br>\begin{align}<br>\mathbf{z_{-1}} &amp;= \mathbf{0}, \\<br>\mathbf{z_t} &amp;= \gamma\lambda\mathbf{z_{t-1}}+\nabla\hat{v}(S_t,\mathbf{w_t}), 0 \leq t\leq T<br>\end{align}<br>$$<br>某一时刻的单步时序差分误差为<br>$$<br>\delta_t=R_{t+1}+\gamma\hat{v}(S_{t+1},\mathbf{w_t})-\hat{v}(S_t,\mathbf{w_t})<br>$$<br>在$TD(\lambda)$中，权值向量每一步的更新正比于时序差分的标量的误差和资格迹。<br>$$<br>\mathbf{w_{t+1}}=\mathbf{w_t}+\alpha\delta_t\mathbf{z_t}<br>$$<br>当时看资格迹时候特别迷这一部分，其实自己稍微推导两个回合就明白了。这里的资格迹其实就是把后面的梯度中的学习率和时序误差提出来剩下的内容。因为是利用函数近似，所以会包含价值的梯度。具体推导两步。</p>
 <p>当$t=0$时：<br>$$<br>\begin{align}<br>U(S_0) &amp;= R_1+\gamma v(S_1,\mathbf{w_0}) \\<br>Loss &amp;= [U(S_0)-v(S_0,\mathbf{w_0})]^2 \\<br>\mathbf{w_1} &amp;= \mathbf{w_0}+\alpha[U(S_0)-v(S_0,\mathbf{w_0})]\nabla v(S_0,\mathbf{w_0}) \\<br>             &amp;= \mathbf{w_0}+\alpha\delta_0\nabla v(S_0,\mathbf{w_0}) \\<br>\mathbf{z_0} &amp;=\mathbf{0} + \nabla v(S_0,\mathbf{w_0})<br>\end{align}<br>$$<br>从上式资格迹可以看出，其和权值向量是同维度的。</p>
 <p>当$t=1$时：<br>$$<br>U(S_1)=R_2+\gamma v(S_2,\mathbf{w_1})<br>$$<br>这时时序误差为$\delta_1=U(S_1)-v(S_1)$，而$U(S_0) = R_1 + \gamma U(S_1)$，所以在$TD(\lambda)$下，$U(S_0)$和$v(S_0,\mathbf{w_1})$的误差为$\gamma\lambda\delta_1$，这两部分的误差理应都考虑，这个时候的损失函数就变为<br>$$<br>Loss=[U(S_0)-v(S_0,\mathbf{w_1})]^2 + [U(S_1)-v(S_1,\mathbf{w_1})]^2<br>$$<br>进行梯度更新<br>$$<br>\begin{align}<br>\mathbf{w_2} &amp;= \mathbf{w_1}+\alpha[U(S_0)-v(S_0,\mathbf{w_1})]\nabla v(S_0,\mathbf{w_1})+ \alpha[U(S_1)-v(S_1,\mathbf{w_1})]\nabla v(S_1,\mathbf{w_1})\\<br>             &amp;= \mathbf{w_1}+\alpha\gamma\lambda\delta_1\nabla v(S_0,\mathbf{w_1}) +\alpha\delta_1\nabla v(S_1,\mathbf{w_1})\\</p>
 <p>\end{align}<br>$$<br>把学习率和时序误差$\delta_1$提出来，得到资格迹<br>$$<br>\mathbf{z_1} =\gamma\lambda\nabla v(S_0,\mathbf{w_1}) + \nabla v(S_1,\mathbf{w_1})<br>$$<br>由于$\nabla v(S_0,\mathbf{w_0})=\nabla v(S_0,\mathbf{w_1})$，所以<br>$$<br>\mathbf{z_1} =\gamma\lambda\mathbf{z_0} + \nabla v(S_1,\mathbf{w_1})<br>$$<br>以次往下更新……</p>
