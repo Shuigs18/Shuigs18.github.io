@@ -20,20 +20,20 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="1. 有&#x2F;无模型学习 有模型学习 方法：动态规划  无模型 方法：蒙特卡洛、时序差分   2. 同&#x2F;异策学习 同策回合更新（策略$\pi$和环境交互得到&#x3D;&#x3D;完整轨迹&#x3D;&#x3D;，然后学习更新价值函数$V^{\pi}$） 每次访问回合更新 首次访问回合更新 带起始探索的同策回合更新（避免陷入局部最优） 基于柔性策略的同策回合更新（避免陷入局部最优）   异策回合更新（行为策略$\pi’$和环境交互得到&#x3D;&#x3D;完">
+  <meta name="description" content="二分类线性模型 1. 模型$$f(x)&#x3D;\operatorname{sign}(w \cdot x+b)$$ Loss function:$$L(w, b)&#x3D;-\sum_{x_{i} \in M} y_{i}\left(w \cdot x_{i}+b\right)$$因此其目标函数为$$\min {w, b} L(w, b)&#x3D;-\sum{x_{i} \in M} y_{i}\left(w \cdo">
 <meta property="og:type" content="article">
-<meta property="og:title" content="RL总结">
-<meta property="og:url" content="http://example.com/2021/02/16/RL%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:title" content="Perceptron(未完待更)">
+<meta property="og:url" content="http://example.com/2021/03/11/Perceptron/index.html">
 <meta property="og:site_name" content="水广山">
-<meta property="og:description" content="1. 有&#x2F;无模型学习 有模型学习 方法：动态规划  无模型 方法：蒙特卡洛、时序差分   2. 同&#x2F;异策学习 同策回合更新（策略$\pi$和环境交互得到&#x3D;&#x3D;完整轨迹&#x3D;&#x3D;，然后学习更新价值函数$V^{\pi}$） 每次访问回合更新 首次访问回合更新 带起始探索的同策回合更新（避免陷入局部最优） 基于柔性策略的同策回合更新（避免陷入局部最优）   异策回合更新（行为策略$\pi’$和环境交互得到&#x3D;&#x3D;完">
+<meta property="og:description" content="二分类线性模型 1. 模型$$f(x)&#x3D;\operatorname{sign}(w \cdot x+b)$$ Loss function:$$L(w, b)&#x3D;-\sum_{x_{i} \in M} y_{i}\left(w \cdot x_{i}+b\right)$$因此其目标函数为$$\min {w, b} L(w, b)&#x3D;-\sum{x_{i} \in M} y_{i}\left(w \cdo">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-02-16T08:59:41.000Z">
-<meta property="article:modified_time" content="2021-02-16T09:00:39.966Z">
+<meta property="article:published_time" content="2021-03-11T13:04:14.000Z">
+<meta property="article:modified_time" content="2021-03-11T13:08:40.821Z">
 <meta property="article:author" content="Guangshan Shui">
-<meta property="article:tag" content="RL">
+<meta property="article:tag" content="《统计学习方法》">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/2021/02/16/RL%E6%80%BB%E7%BB%93/">
+<link rel="canonical" href="http://example.com/2021/03/11/Perceptron/">
 
 
 <script id="page-configurations">
@@ -46,7 +46,7 @@
   };
 </script>
 
-  <title>RL总结 | 水广山</title>
+  <title>Perceptron(未完待更) | 水广山</title>
   
 
 
@@ -170,7 +170,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/02/16/RL%E6%80%BB%E7%BB%93/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/11/Perceptron/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -183,7 +183,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          RL总结
+          Perceptron(未完待更)
         </h1>
 
         <div class="post-meta">
@@ -194,7 +194,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-02-16 16:59:41 / 修改时间：17:00:39" itemprop="dateCreated datePublished" datetime="2021-02-16T16:59:41+08:00">2021-02-16</time>
+              <time title="创建时间：2021-03-11 21:04:14 / 修改时间：21:08:40" itemprop="dateCreated datePublished" datetime="2021-03-11T21:04:14+08:00">2021-03-11</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -217,139 +217,22 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="1-有-无模型学习"><a href="#1-有-无模型学习" class="headerlink" title="1. 有/无模型学习"></a>1. 有/无模型学习</h2><ul>
-<li><p>有模型学习</p>
-<p>方法：动态规划</p>
-</li>
-<li><p>无模型</p>
-<p>方法：蒙特卡洛、时序差分</p>
-</li>
-</ul>
-<h2 id="2-同-异策学习"><a href="#2-同-异策学习" class="headerlink" title="2. 同/异策学习"></a>2. 同/异策学习</h2><ul>
-<li>同策<strong>回合更新</strong>（策略$\pi$和环境交互得到==完整轨迹==，然后学习更新价值函数$V^{\pi}$）<ul>
-<li>每次访问回合更新</li>
-<li>首次访问回合更新</li>
-<li>带起始探索的同策回合更新（避免陷入局部最优）</li>
-<li>基于柔性策略的同策回合更新（避免陷入局部最优）</li>
-</ul>
-</li>
-<li>异策<strong>回合更新</strong>（<strong>行为策略</strong>$\pi’$和环境交互得到==完整轨迹==，<strong>目标策略</strong>$\pi$学习更新价值函数$V^{\pi}$）<ul>
-<li>重要性采样 李宏毅讲的很好</li>
-<li>异策回合更新策略评估  # 利用行为策略估计目标策略的动作状态价值对函数和状态价值对函数</li>
-<li>异策回合更新最优策略的求解  # 评估 + 改进  改进部分是依据每个状态下的最大价值动作。</li>
-</ul>
-</li>
-</ul>
-<h2 id="3-回合更新-时序差分更新"><a href="#3-回合更新-时序差分更新" class="headerlink" title="3. 回合更新/时序差分更新"></a>3. 回合更新/时序差分更新</h2><ul>
-<li>回合更新（无偏差但方差大，和环境完整的交互一个回合）<ul>
-<li>利用蒙特卡洛方法，对完整的G进行无偏差估计，但是方差较大</li>
-</ul>
-</li>
-<li>时序差分更新（有偏差，但方差小，收敛快，n步就和环境交互n次）<ul>
-<li>同策，策略$\pi$生成轨迹，然后策略$\pi$学习更新$q(s,·)$，然后根据q值更新策略<ul>
-<li>$TD(\lambda)$(除极端的无穷外是时序差分，同策)</li>
-<li>SARSA算法 = 单/多步时序差分（策略评估）+ 策略改进   （同策）</li>
-<li>期望SARSA算法：$U_t=R_{t+1}+\gamma \sum_{a\in \mathcal{A}}\pi(a|S_{t+1})q(S_{t+1},a)$ 也有单步和多步  （同策）</li>
-</ul>
-</li>
-<li>异策，行为策略$b$和环境进行交互得到轨迹，然后依据此轨迹对策略$\pi$进行学习更新q值，然后根据q值对策略进行更新<ul>
-<li>单步/多步时序差分</li>
-<li>SARSA算法/期望SARSA算法</li>
-<li>Q-learning</li>
-<li>Double Q-learning</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>资格迹<ul>
-<li>资格迹和以上时序差分策略都可以结合，不管是同策还是异策。</li>
-</ul>
-</li>
-</ul>
-<h2 id="4-基于价值-策略-二者结合"><a href="#4-基于价值-策略-二者结合" class="headerlink" title="4. 基于价值/策略/二者结合"></a>4. 基于价值/策略/二者结合</h2><ul>
-<li><p>基于<strong>价值</strong>的</p>
+        <p>二分类线性模型</p>
+<h2 id="1-模型"><a href="#1-模型" class="headerlink" title="1. 模型"></a>1. 模型</h2><p>$$<br>f(x)=\operatorname{sign}(w \cdot x+b)<br>$$</p>
+<p><strong>Loss function:</strong><br>$$<br>L(w, b)=-\sum_{x_{i} \in M} y_{i}\left(w \cdot x_{i}+b\right)<br>$$<br>因此其<strong>目标函数</strong>为<br>$$<br>\min <em>{w, b} L(w, b)=-\sum</em>{x_{i} \in M} y_{i}\left(w \cdot x_{i}+b\right)<br>$$<br>优化方法：</p>
 <ul>
-<li>蒙特卡洛方法估计G</li>
-<li>动态规划</li>
-<li>$TD(\lambda)$</li>
-<li>SARSA</li>
-<li>Q-learning</li>
-<li>Double Q-learning</li>
+<li>随机梯度下降(SGD)：每次更新使用一个数据 </li>
 </ul>
-</li>
-<li><p>基于<strong>策略</strong>（回合更新，利用策略交互不断得到完整轨迹，多个回合更新目标是使策略$\pi$的期望$E(G)$最大</p>
-<ul>
-<li>同策回合更新策略梯度算法</li>
-<li>异策回合更新策略梯度算法</li>
-</ul>
-</li>
-<li><p><strong>执行者/评论者</strong>方法 = 价值更新 + 策略更新 (价值更新部分使用深度强化学习方法+单步时序差分，策略更新也是用深度强化学习方法)</p>
-<ul>
-<li><p><strong>动作价值</strong>执行者评论者算法 $E(\Psi_t \nabla \ln\pi(a_t|s_t;\theta)), \Psi_t=\gamma^tq_{\pi}(s_t,a_t)$</p>
-</li>
-<li><p><strong>A2C-优势</strong>执行者/评论者算法 $\Psi_t=\gamma^t[q_{\pi}(s_t,a_t)-v_{\pi}(s_t)]$</p>
-</li>
-<li><p><strong>时序差分</strong>执行者/评论者算法 $\Psi_t=\gamma^t[r_{t+1}+\gamma v_{\pi}(s_{t+1})-v_{\pi}(s_t)]$</p>
-</li>
-<li><p><strong>A3C-异步</strong>优势执行者/评论者算法；利用多个agent同时搜集经验更新自己的参数并传给一个总的agent，可以单/多步时序差分</p>
-</li>
-<li><p>带<strong>资格迹</strong>的执行者评论者算法</p>
-</li>
-<li><p>基于<strong>代理优势</strong>的同策算法</p>
-<ul>
-<li><strong>邻近策略优化PPO2</strong>，在目标中添加描述分布差异的指标，$E_{\pi(\theta_{old})}[\min(\frac{\pi(A_t|S_t;\theta_{new})}{\pi(A_t|S_t;\theta_{old})}a_{\pi(\theta_{old})}(S_a,A_t), a_{\pi(\theta_{old})}(S_a,A_t)+\varepsilon|a_{\pi(\theta_{old})}(S_a,A_t)|)]$</li>
-</ul>
-</li>
-<li><p><strong>信任域算法</strong></p>
-<ul>
-<li><p><strong>自然策略梯度算法NPG</strong>，最大化代理优势，并添加约束条件，KL散度小于$\delta$，但NPG是对目标函数进行泰勒一阶近似，约束条件进行泰勒二阶近似。对近似后的问题进行求解。</p>
-<p>$\mathbf{\theta} \leftarrow \mathbf{\theta} +  \sqrt{\frac{2\delta}{\mathbf{g^TF^{-1}g}}}\mathbf{F^{-1}g}$</p>
-</li>
-<li><p>带共轭梯度的自然策略梯度算法</p>
-<p>利用共轭梯度算法求解$\mathbf{F^{-1}g}，\mathbf{Fx=g}$，$\mathbf{\theta} \leftarrow \mathbf{\theta} +  \sqrt{\frac{2\delta}{\mathbf{x^TFx}}}\mathbf{x}$</p>
-</li>
-<li><p><strong>信赖域策略优化TRPO</strong>，在NPG的基础上修改得到，因为其近似问题可能不一定导致问题有最优解，在个别情况下可能使情况更糟，TRPO对迭代式进行改进<br>$$<br>\boldsymbol{\theta_{k+1} = \theta_k}+\alpha^j \sqrt{\frac{2\delta}{\boldsymbol{[x([\theta_k])^T]Fx([\theta_k])}}}\boldsymbol{x([\theta_k])}<br>$$<br>其中$\alpha$是学习参数，$j$是某个非负整数，对于自然策略梯度$j$总是0，TRPO用一下方法确定$j$的值：从非负整数d到0，1，2…中依次寻找首个满足期望KL散度约束并且能够提升代理梯度的值。不过由于一般近似的不错，所以一般为0，个别情况为1，其他值几乎没有。</p>
-</li>
-<li><p><strong>Kronecker因子信任域执行者/评论者算法 ACKTR</strong>，将Kronecker因子近似曲率算法用到信任域策略优化算法中，减少计算量</p>
-</li>
-</ul>
-</li>
-<li><p>重要性采样异策执行者/评论者算法</p>
-<ul>
-<li><strong>异策</strong>执行者/评论者算法，将目标期望$E_{\pi(\boldsymbol{\theta})}(\Psi_t \nabla \ln\pi(a_t|s_t;\theta))$，变为$E_b(\frac{\pi(A_t|S_t;\boldsymbol{\theta})}{b(A_t|S_t)}\Psi_t \nabla \ln\pi(a_t|s_t;\theta))$</li>
-<li><strong>带经验回放的异策</strong>执行者/评论者算法（<strong>ACER</strong>）</li>
-</ul>
-</li>
-<li><p><strong>柔性执行者/评论者算法（SAC）</strong></p>
-</li>
-<li><p>确定性策略</p>
-<ul>
-<li>同策确定性算法</li>
-<li>异策确定性算法</li>
-<li><strong>深度确定性策略梯度算法(DDPG)</strong></li>
-<li><strong>双重延迟深度确定性策略梯度算法(TD3)</strong></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="5-深度强化学习-非深度强化学习"><a href="#5-深度强化学习-非深度强化学习" class="headerlink" title="5. 深度强化学习/非深度强化学习"></a>5. 深度强化学习/非深度强化学习</h2><ul>
-<li>深度Q学习</li>
-<li>双重深度Q网络</li>
-<li>对偶深度Q网络<ul>
-<li>对于某个状态S，有些action可能采样不到，但通过对偶深度Q网络也可以更新</li>
-</ul>
-</li>
-<li>Noise Net<ul>
-<li>对采样的Q网络的参数添加噪声，探索</li>
-</ul>
-</li>
-<li>Distributional Q_function<ul>
-<li>该方法认为Q(s, a)有一个分布，即相同的状态和行为的价值，是一个分布，用神经网络估计这个分布</li>
-</ul>
-</li>
-</ul>
-<h2 id="6-离线学习-在线学习（待更）"><a href="#6-离线学习-在线学习（待更）" class="headerlink" title="6. 离线学习/在线学习（待更）"></a>6. 离线学习/在线学习（待更）</h2>
+<p><strong>算法2.1:</strong></p>
+<p>输入: 训练数据集 $T=\left{\left(x_{1}, y_{1}\right),\left(x_{2}, y_{2}\right), \cdots,\left(x_{N}, y_{N}\right)\right},$ 其中 $x_{i} \in \mathcal{X}=\mathbf{R}^{n}, \boldsymbol{y_{i} \in\mathcal{Y}={-1,+1}}, i=1,2, \cdots, N ;$ 学习率 $\eta(0&lt;\eta \leqslant 1) ;$<br>输出 $: w, b ;$ 感知机模型 $f(x)=\operatorname{sign}(w \cdot x+b)$ 。<br>(1) 选取初值 $w_{0}, b_{0} ;$<br>(2) 在训练集中选取数据 $\left(x_{i}, y_{i}\right) ;$<br>(3) 如果 $y_{i}\left(w \cdot x_{i}+b\right) \leqslant 0$,<br>$$<br>\begin{array}{l}<br>w \leftarrow w+\eta y_{i} x_{i} \\<br>b \leftarrow b+\eta y_{i}<br>\end{array}<br>$$<br>(4) 转至 (2)，直至训练集中没有误分类点。</p>
+<h2 id="2-算法的收敛性"><a href="#2-算法的收敛性" class="headerlink" title="2. 算法的收敛性"></a>2. 算法的收敛性</h2><p>对于<strong>线性可分的的数据集</strong>，perceptron经过有限次迭代一定会收敛</p>
+<p><strong>证明过程待后续补充：</strong></p>
+<h2 id="3-感知机的对偶形式"><a href="#3-感知机的对偶形式" class="headerlink" title="3. 感知机的对偶形式"></a>3. 感知机的对偶形式</h2><p>对偶形式的基本想法是，将 $w$ 和 $b$ 表示为实例 $x_{i}$ 和标记 $y_{i}$ 的线性组合的形式, 通过求解其系数而求得 $w$ 和 $b$ 。不失一般性，在算法中可假设初始值 $w_{0}, b_{0}$ 均为<br>$0 。$ 对误分类点 $\left(x_{i}, y_{i}\right)$ 通过<br>$$<br>\begin{array}{l}<br>w \leftarrow w+\eta y_{i} x_{i} \\<br>b \leftarrow b+\eta y_{i}<br>\end{array}<br>$$<br>最后学得的 $w,b$ 可以表示为<br>$$<br>\begin{array}{c}<br>w=\sum_{i=1}^{N} \alpha_{i} y_{i} x_{i} \\<br>b=\sum_{i=1}^{N} \alpha_{i} y_{i}<br>\end{array}<br>$$<br><strong>算法 2.2(感知机学习算法的对偶形式)</strong><br>输入: 线性可分的数据集 $T=\left{\left(x_{1}, y_{1}\right),\left(x_{2}, y_{2}\right), \cdots,\left(x_{N}, y_{N}\right)\right}$, 其中 $x_{i} \in \mathbf{R}^{n}, y_{i} \in{-1,+1}, i=1,2, \cdots, N ;$ 学习率 $\eta(0&lt;\eta \leqslant 1) ;$<br>输 出: $\alpha, b ;$ 感 知 机 模型 $f(x)=\operatorname{sign}\left(\sum_{j=1}^{N} \alpha_{j} y_{j} x_{j} \cdot x+b\right), \quad$ 其 中 $\alpha=\left(\alpha_{1}, \alpha_{2}, \cdots, \alpha_{N}\right)^{\mathrm{T}}$<br>(1) $\alpha \leftarrow 0, b \leftarrow 0 ;$<br>(2) 在训练集中选取数据 $\left(x_{i}, y_{i}\right) ;$</p>
+<p>(3) 如果 $y_{i}\left(\sum_{j=1}^{N} \alpha_{j} y_{j} x_{j} \cdot x_{i}+b\right) \leqslant 0$,<br>$$<br>\begin{array}{l}<br>\alpha_{i} \leftarrow \alpha_{i}+\eta \\<br>b \leftarrow b+\eta y_{i}<br>\end{array}<br>$$<br>(4）转至 (2) 直到没有误分类数据。</p>
+<p><strong>讨论感知机的对偶有什么意义？</strong></p>
+<p><strong>这两个不应该是一样的吗？</strong></p>
+<h2 id="4-感知机代码"><a href="#4-感知机代码" class="headerlink" title="4. 感知机代码"></a>4. 感知机代码</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">np.random.seed(<span class="number">0</span>)</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> datasets</span><br><span class="line">iris = datasets.load_iris()</span><br><span class="line">X = iris.data[:<span class="number">100</span>, :<span class="number">2</span>]</span><br><span class="line">Y = iris.target[:<span class="number">100</span>]</span><br><span class="line">Y[Y == <span class="number">0</span>] = -<span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 数据标准化</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_normalize</span>(<span class="params">X, train_set = <span class="literal">True</span>, specified_column = <span class="literal">None</span>, X_mean = <span class="literal">None</span>, X_std = <span class="literal">None</span></span>):</span></span><br><span class="line">    <span class="keyword">if</span> specified_column == <span class="literal">None</span>:</span><br><span class="line">        specified_column = np.arange(<span class="built_in">len</span>(X[<span class="number">0</span>]))</span><br><span class="line">    <span class="keyword">if</span> train_set:</span><br><span class="line">        X_mean = np.mean(X[:, specified_column], axis = <span class="number">0</span>)</span><br><span class="line">        X_std = np.std(X[:, specified_column], axis = <span class="number">0</span>)</span><br><span class="line">    X[:, specified_column] = (X[:, specified_column] - X_mean) / (X_std + <span class="number">1e-8</span>)</span><br><span class="line">    <span class="keyword">return</span> X, X_mean, X_std</span><br><span class="line"></span><br><span class="line">X, X_mean, X_std = _normalize(X, train_set = <span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">## 注意label的标枪必须是 -1 和 1 要不然会无限循环下去</span></span><br><span class="line"><span class="comment">## 这样写有个错误，如果数据集不是线性可分的，将一直循环下去, iris数据集是线性可分的</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_train</span>(<span class="params">X, Y, learning_rate = <span class="number">0.2</span></span>):</span></span><br><span class="line">    data_dim = <span class="built_in">len</span>(X[<span class="number">0</span>])</span><br><span class="line">    w = np.zeros((<span class="number">1</span>, data_dim))</span><br><span class="line">    b = <span class="number">0</span></span><br><span class="line">    not_finish = <span class="literal">True</span></span><br><span class="line">    <span class="keyword">while</span> not_finish:</span><br><span class="line">        wrong_count = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> idx <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(X)):</span><br><span class="line">            Y_pred = np.sign(np.dot(w, X[idx]) + b)</span><br><span class="line">            <span class="keyword">if</span> Y_pred * Y[idx] &lt;= <span class="number">0</span>: </span><br><span class="line">                w += learning_rate * Y[idx] * X[idx]</span><br><span class="line">                b += learning_rate * Y[idx]</span><br><span class="line">                wrong_count += <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> wrong_count == <span class="number">0</span>:</span><br><span class="line">            not_finish = <span class="literal">False</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;Perceptron is done!&#x27;</span></span><br><span class="line">_train(X,Y,<span class="number">0.1</span>)</span><br></pre></td></tr></table></figure>
+
     </div>
 
     
@@ -358,7 +241,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/RL/" rel="tag"># RL</a>
+              <a href="/tags/%E3%80%8A%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95%E3%80%8B/" rel="tag"># 《统计学习方法》</a>
           </div>
 
         
@@ -367,13 +250,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/02/09/%E8%B5%84%E6%A0%BC%E8%BF%B9/" rel="prev" title="资格迹">
-      <i class="fa fa-chevron-left"></i> 资格迹
+    <a href="/2021/02/16/RL%E6%80%BB%E7%BB%93/" rel="prev" title="RL总结">
+      <i class="fa fa-chevron-left"></i> RL总结
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2021/03/11/Perceptron/" rel="next" title="Perceptron(未完待更)">
-      Perceptron(未完待更) <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -432,7 +312,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%9C%89-%E6%97%A0%E6%A8%A1%E5%9E%8B%E5%AD%A6%E4%B9%A0"><span class="nav-number">1.</span> <span class="nav-text">1. 有&#x2F;无模型学习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%90%8C-%E5%BC%82%E7%AD%96%E5%AD%A6%E4%B9%A0"><span class="nav-number">2.</span> <span class="nav-text">2. 同&#x2F;异策学习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%9B%9E%E5%90%88%E6%9B%B4%E6%96%B0-%E6%97%B6%E5%BA%8F%E5%B7%AE%E5%88%86%E6%9B%B4%E6%96%B0"><span class="nav-number">3.</span> <span class="nav-text">3. 回合更新&#x2F;时序差分更新</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%9F%BA%E4%BA%8E%E4%BB%B7%E5%80%BC-%E7%AD%96%E7%95%A5-%E4%BA%8C%E8%80%85%E7%BB%93%E5%90%88"><span class="nav-number">4.</span> <span class="nav-text">4. 基于价值&#x2F;策略&#x2F;二者结合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0-%E9%9D%9E%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0"><span class="nav-number">5.</span> <span class="nav-text">5. 深度强化学习&#x2F;非深度强化学习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E7%A6%BB%E7%BA%BF%E5%AD%A6%E4%B9%A0-%E5%9C%A8%E7%BA%BF%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%BE%85%E6%9B%B4%EF%BC%89"><span class="nav-number">6.</span> <span class="nav-text">6. 离线学习&#x2F;在线学习（待更）</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">1. 模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E7%AE%97%E6%B3%95%E7%9A%84%E6%94%B6%E6%95%9B%E6%80%A7"><span class="nav-number">2.</span> <span class="nav-text">2. 算法的收敛性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%84%9F%E7%9F%A5%E6%9C%BA%E7%9A%84%E5%AF%B9%E5%81%B6%E5%BD%A2%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">3. 感知机的对偶形式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E6%84%9F%E7%9F%A5%E6%9C%BA%E4%BB%A3%E7%A0%81"><span class="nav-number">4.</span> <span class="nav-text">4. 感知机代码</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
