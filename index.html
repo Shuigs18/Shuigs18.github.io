@@ -164,6 +164,104 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/15/Naive-Bayes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Guangshan Shui">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="水广山">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/03/15/Naive-Bayes/" class="post-title-link" itemprop="url">Naive Bayes</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-03-15 16:47:59 / 修改时间：16:54:38" itemprop="dateCreated datePublished" datetime="2021-03-15T16:47:59+08:00">2021-03-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ML/" itemprop="url" rel="index"><span itemprop="name">ML</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>生成模型</p>
+<p>对于给定数据集，首先基于<strong>特征条件独立</strong>假设学习输入输出的联合概率分布； 然后基于此模型， 对给定的输入 $x$， 利用贝叶斯定理求出后验概率最大的输出 $y$。 朴素贝叶斯法实现简单， 学习与预测的效率都很高， 是一种常用的方法。</p>
+<h3 id="1-学习与分类"><a href="#1-学习与分类" class="headerlink" title="1. 学习与分类"></a>1. 学习与分类</h3><ul>
+<li>首先学习先验概率分布以及条件概率分布。</li>
+</ul>
+<p>$$<br>P(Y=c_k),\quad k=1,2,…k<br>$$</p>
+<p>$$<br>P(X=x \mid Y=c_{k})=P(X^{(1)}=x^{(1)}, \cdots, X^{(n)}=x^{(n)} \mid Y=c_{k}), \quad k=1,2, \cdots, K<br>$$</p>
+<p>于是学到联合概率分布 $P(X,Y)$</p>
+<p>由于朴素贝叶斯假设条件独立，于是条件概率为<br>$$<br>\begin{aligned}<br>P(X=x \mid Y=c_{k}) &amp;=P(X^{(1)}=x^{(1)}, \cdots, X^{(n)}=x^{(n)} \mid Y=c_{k}) \\<br>&amp;=\prod_{j=1}^{n} P(X^{(j)}=x^{(j)} \mid Y=c_{k})<br>\end{aligned}<br>$$</p>
+<ul>
+<li><p><strong>参数学习(极大似然)</strong><br>$$<br>P\left(Y=c_{k}\right)=\frac{\sum_{i=1}^{N} I\left(y_{i}=c_{k}\right)}{N}, \quad k=1,2, \cdots, K<br>$$</p>
+<p>$$<br>\begin{array}{l}<br>P\left(X^{(j)}=a_{j l} \mid Y=c_{k}\right)=\frac{\sum_{i=1}^{N} I\left(x_{i}^{(j)}=a_{j l}, y_{i}=c_{k}\right)}{\sum_{i=1}^{N} I\left(y_{i}=c_{k}\right)} \\<br>j=1,2, \cdots, n ; \quad l=1,2, \cdots, S_{j} ; \quad k=1,2, \cdots, K<br>\end{array}<br>$$</p>
+</li>
+<li><p><strong>分类器</strong></p>
+</li>
+</ul>
+<p>$$<br>y=f(x)=\arg \max_{c_{k}} \frac{P\left(Y=c_{k}\right) \prod_{j} P\left(X^{(j)}=x^{(j)} \mid Y=c_{k}\right)}{\sum_{k} P\left(Y=c_{k}\right) \prod_{j} P\left(X^{(j)}=x^{(j)} \mid Y=c_{k}\right)}<br>$$</p>
+<h2 id="2-原理-后验概率最大化-期望风险最小化"><a href="#2-原理-后验概率最大化-期望风险最小化" class="headerlink" title="2. 原理(后验概率最大化 == 期望风险最小化)"></a>2. 原理(后验概率最大化 == 期望风险最小化)</h2><p>假设选择0-1损失函数<br>$$<br>L(Y, f(X))=\left{\begin{array}{ll}<br>1, &amp; Y \neq f(X) \\<br>0, &amp; Y=f(X)<br>\end{array}\right.<br>$$<br>期望风险函数为<br>$$<br>R_{\exp }(f)=E[L(Y, f(X))]<br>$$<br>期望是对联合分布 $P(X,Y)$取的，由此条件期望<br>$$<br>R_{\exp }(f)=E_{X} \sum_{k=1}^{K}\left[L\left(c_{k}, f(X)\right)\right] P\left(c_{k} \mid X\right)<br>$$<br>为了使期望风险最小化，只需对 $X=x$ 逐个极小化，<br>$$<br>\begin{aligned}<br>f(x) &amp;=\arg \min_{y \in \mathcal{Y}} \sum_{k=1}^{K} L\left(c_{k}, y\right) P\left(c_{k} \mid X=x\right) \\<br>&amp;=\arg \min_{y \in \mathcal{Y}} \sum_{k=1}^{K} P\left(y \neq c_{k} \mid X=x\right) \\<br>&amp;=\arg \min_{y \in \mathcal{Y}}\left(1-P\left(y=c_{k} \mid X=x\right)\right) \\<br>&amp;=\arg \max_{y \in \mathcal{Y}} P\left(y=c_{k} \mid X=x\right)<br>\end{aligned}<br>$$</p>
+<h2 id="3-贝叶斯估计-拉普拉斯平滑"><a href="#3-贝叶斯估计-拉普拉斯平滑" class="headerlink" title="3. 贝叶斯估计(拉普拉斯平滑)"></a>3. 贝叶斯估计(拉普拉斯平滑)</h2><p>用极大似然估计可能会出现所要估计的概率值为0的情况。 这时会影响到后验概率的计算结果， 使分类产生偏差。 解决这一问题的方法是采用贝叶斯估计。具体的条件概率的贝叶斯估计是<br>$$<br>P_{\lambda}\left(X^{(j)}=a_{j l} \mid Y=c_{k}\right)=\frac{\sum_{i=1}^{N} I\left(x_{i}^{(j)}=a_{j l}, y_{i}=c_{k}\right)+\lambda}{\sum_{i=1}^{N} I\left(y_{i}=c_{k}\right)+S_{j} \lambda}<br>$$<br>$l=1,2,\cdots,S_j,k=1,2,…,K$ ，$\lambda \geq 0$，等价于在随机变量各个取值上赋予一个正数。$\lambda = 0$ 是极大似然估计。常取 $\lambda = 1$，称为拉普拉斯平滑。检验可知，概率和为1，并且每个概率大于0</p>
+<p>先验概率的贝叶斯估计是<br>$$<br>P_{\lambda}\left(Y=c_{k}\right)=\frac{\sum_{i=1}^{N} I\left(y_{i}=c_{k}\right)+\lambda}{N+K \lambda}<br>$$</p>
+<h2 id="4-代码实现"><a href="#4-代码实现" class="headerlink" title="4. 代码实现"></a>4. 代码实现</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">%matplotlib inline</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> load_iris</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> Counter</span><br><span class="line"><span class="keyword">import</span> math</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># import data</span></span><br><span class="line">iris = load_iris()</span><br><span class="line">df = pd.DataFrame(iris.data, columns=iris.feature_names)</span><br><span class="line">df[<span class="string">&#x27;labels&#x27;</span>] = iris.target</span><br><span class="line">df.columns = [</span><br><span class="line">    <span class="string">&#x27;sepal length&#x27;</span>, <span class="string">&#x27;sepal width&#x27;</span>, <span class="string">&#x27;petal length&#x27;</span>, <span class="string">&#x27;petal width&#x27;</span>, <span class="string">&#x27;label&#x27;</span></span><br><span class="line">]</span><br><span class="line">data = np.array(df)</span><br><span class="line">X, Y = data[:, :-<span class="number">1</span>], data[:, -<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_shuffle</span>(<span class="params">X, Y</span>):</span></span><br><span class="line">    randomize = np.arange(<span class="built_in">len</span>(X))</span><br><span class="line">    np.random.shuffle(randomize)</span><br><span class="line">    <span class="keyword">return</span> X[randomize], Y[randomize]</span><br><span class="line"></span><br><span class="line">X, Y = _shuffle(X,Y)</span><br><span class="line"></span><br><span class="line">X_train, X_test, Y_train, Y_test = train_test_split(X,Y, test_size = <span class="number">0.3</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NaiveBayes</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        self.model = <span class="literal">None</span></span><br><span class="line">        self.Y_mean = <span class="literal">None</span></span><br><span class="line">        </span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 计算均值</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">mean</span>(<span class="params">self, X</span>):</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">sum</span>(X) / <span class="built_in">float</span>(<span class="built_in">len</span>(X))</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 计算标准差</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">std</span>(<span class="params">self, X</span>):</span></span><br><span class="line">        avg = self.mean(X)</span><br><span class="line">        <span class="keyword">return</span> math.sqrt(<span class="built_in">sum</span>([<span class="built_in">pow</span>(x - avg, <span class="number">2</span>) <span class="keyword">for</span> x <span class="keyword">in</span> X]) / <span class="built_in">float</span>(<span class="built_in">len</span>(X)))</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 概率密度函数</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">gaussian_probability</span>(<span class="params">self, x, mean, std</span>):</span></span><br><span class="line">        exp = math.exp(-(math.<span class="built_in">pow</span>(x - mean, <span class="number">2</span>) / (<span class="number">2</span> * math.<span class="built_in">pow</span>(std, <span class="number">2</span>))))</span><br><span class="line">        <span class="keyword">return</span> (<span class="number">1</span> / (math.sqrt(<span class="number">2</span> * math.pi)) * std) * exp</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 计算X_train的mean 和std</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">summarize</span>(<span class="params">self, X_train</span>):</span> <span class="comment">#  *X_train 星号作用是解包然后逐个传入 </span></span><br><span class="line">        summaries = [(self.mean(i), self.std(i)) <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">zip</span>(*X_train)] <span class="comment"># 所以zip(*X_train) == zip([1,2,3],[2,3,4],...)</span></span><br><span class="line">        <span class="keyword">return</span> summaries</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">fit</span>(<span class="params">self, X, Y</span>):</span></span><br><span class="line">        labels = <span class="built_in">list</span>(<span class="built_in">set</span>(Y))</span><br><span class="line">        data = &#123;label: [] <span class="keyword">for</span> label <span class="keyword">in</span> labels&#125; <span class="comment"># 初始化</span></span><br><span class="line">        self.Y_mean = np.zeros(<span class="built_in">len</span>(labels))</span><br><span class="line">        <span class="keyword">for</span> x, label <span class="keyword">in</span> <span class="built_in">zip</span>(X, Y):</span><br><span class="line">            data[label].append(x)</span><br><span class="line">            self.Y_mean[<span class="built_in">int</span>(label)] += <span class="number">1.</span></span><br><span class="line">        self.Y_mean /= <span class="built_in">len</span>(Y)</span><br><span class="line">        <span class="comment"># 计算P(x_i|y_k) for i in range...</span></span><br><span class="line">        self.model = &#123;</span><br><span class="line">            label:self.summarize(value)</span><br><span class="line">            <span class="keyword">for</span> label, value <span class="keyword">in</span> data.items()</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;gaussianNB train done&#x27;</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">calculate_probabilities</span>(<span class="params">self, input_data</span>):</span></span><br><span class="line">        <span class="comment"># summaries: &#123;0: [(mean1,std1),(mean2,std2),(mean3,std3),(mean4,std4)], 1:...&#125;</span></span><br><span class="line">        probabilities = &#123;&#125;</span><br><span class="line">        <span class="keyword">for</span> label, value <span class="keyword">in</span> self.model.items(): <span class="comment"># value --&gt; summaries</span></span><br><span class="line">            probabilities[label] = self.Y_mean[<span class="built_in">int</span>(label)] <span class="comment"># P(C_i)</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(value)):</span><br><span class="line">                mean, std = value[i]</span><br><span class="line">                probabilities[label] *= self.gaussian_probability(input_data[i], mean, std)</span><br><span class="line">                <span class="comment"># 计算P(x|c_i) * P(C_i)的概率</span></span><br><span class="line">        <span class="keyword">return</span> probabilities</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">predict</span>(<span class="params">self, X_test</span>):</span> </span><br><span class="line">        <span class="comment"># 这里X_test为单个实例</span></span><br><span class="line">        result = []</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(X_test)):</span><br><span class="line">            label = <span class="built_in">sorted</span>(self.calculate_probabilities(X_test[i]).items(), key=<span class="keyword">lambda</span> x:x[-<span class="number">1</span>])[-<span class="number">1</span>][<span class="number">0</span>]  <span class="comment"># sorted 默认从小到大 返回一个list</span></span><br><span class="line">            <span class="comment"># 如[(1, 75), (0, 85), (2, 95)]</span></span><br><span class="line">            result.append(label)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">score</span>(<span class="params">self, X_test, Y_test</span>):</span></span><br><span class="line">        right = <span class="number">0</span></span><br><span class="line">        predictions = self.predict(X_test)</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(Y_test)):</span><br><span class="line">            <span class="keyword">if</span> predictions[i] == Y_test[i]:</span><br><span class="line">                right += <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> right / <span class="built_in">float</span>(<span class="built_in">len</span>(Y_test))</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">model = NaiveBayes()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">model.fit(X_train, Y_train)</span><br><span class="line"><span class="comment"># &#x27;gaussianNB train done&#x27;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">result1 = model.predict(X_test)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">model.score(X_test, Y_test)</span><br></pre></td></tr></table></figure>
+<p><strong>scikit-learn 实例</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.naive_bayes <span class="keyword">import</span> GaussianNB</span><br><span class="line">clf = GaussianNB()</span><br><span class="line"><span class="comment">#X = np.array([[-1, -1], [-2, -1], [-3, -2], [1, 1], [2, 1], [3, 2]])</span></span><br><span class="line"><span class="comment">#Y = np.array([1, 1, 1, 2, 2, 2])</span></span><br><span class="line">clf.fit(X_train, Y_train)</span><br><span class="line">result2 = clf.predict(X_test)</span><br><span class="line">clf.score(X_test, Y_test)</span><br></pre></td></tr></table></figure>
+<h2 id="Reference："><a href="#Reference：" class="headerlink" title="Reference："></a>Reference：</h2><p>[1]. <a target="_blank" rel="noopener" href="https://github.com/fengdu78/lihang-code/blob/master/%E7%AC%AC04%E7%AB%A0%20%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF/4.NaiveBayes.ipynb">https://github.com/fengdu78/lihang-code/blob/master/%E7%AC%AC04%E7%AB%A0%20%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF/4.NaiveBayes.ipynb</a></p>
+<p>[2]. 《统计学习方法》 – 李航</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/14/K-NN/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1068,7 +1166,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
