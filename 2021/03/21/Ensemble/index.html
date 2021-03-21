@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="boosting  bagging  stacking   1. boosting 代表算法：AdaBoost  只能分类？ 弱分类器：比较粗糙的分类规则 强分类器：精确的分类规则 提升方法就是组合弱分类器，构成一个强分类器 大多数的提升方法都是改变训练数据的概率分布（训练数据的权值分布），针对不同的训练数据分布调用弱学习算法学习 对于提升方法来说有两个问题需要回答：  每一轮如何改变训练数据的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ensemble">
+<meta property="og:url" content="http://example.com/2021/03/21/Ensemble/index.html">
+<meta property="og:site_name" content="水广山">
+<meta property="og:description" content="boosting  bagging  stacking   1. boosting 代表算法：AdaBoost  只能分类？ 弱分类器：比较粗糙的分类规则 强分类器：精确的分类规则 提升方法就是组合弱分类器，构成一个强分类器 大多数的提升方法都是改变训练数据的概率分布（训练数据的权值分布），针对不同的训练数据分布调用弱学习算法学习 对于提升方法来说有两个问题需要回答：  每一轮如何改变训练数据的">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-03-21T06:53:52.000Z">
+<meta property="article:modified_time" content="2021-03-21T06:55:26.909Z">
+<meta property="article:author" content="Guangshan Shui">
+<meta property="article:tag" content="《统计学习方法》">
+<meta property="article:tag" content="《机器学习》">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/03/21/Ensemble/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Ensemble | 水广山</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">水广山</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/21/Ensemble/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Guangshan Shui">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="水广山">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Ensemble
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-03-21 14:53:52 / 修改时间：14:55:26" itemprop="dateCreated datePublished" datetime="2021-03-21T14:53:52+08:00">2021-03-21</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ML/" itemprop="url" rel="index"><span itemprop="name">ML</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <ul>
+<li><p>boosting</p>
+</li>
+<li><p>bagging</p>
+</li>
+<li><p>stacking</p>
+</li>
+</ul>
+<h1 id="1-boosting"><a href="#1-boosting" class="headerlink" title="1. boosting"></a>1. boosting</h1><ul>
+<li><strong>代表算法：AdaBoost</strong></li>
+</ul>
+<p><strong>只能分类？</strong></p>
+<p>弱分类器：比较粗糙的分类规则</p>
+<p>强分类器：精确的分类规则</p>
+<p>提升方法就是组合弱分类器，构成一个强分类器</p>
+<p>大多数的提升方法都是改变训练数据的概率分布（训练数据的权值分布），针对<strong>不同的训练数据分布</strong>调用弱学习算法学习</p>
+<p>对于提升方法来说有两个问题需要回答：</p>
+<ol>
+<li><p>每一轮如何改变训练数据的权值或概率分布 </p>
+</li>
+<li><p>如何将弱分类器组合成一个强分类器</p>
+</li>
+</ol>
+<h2 id="1-1-AdaBoost"><a href="#1-1-AdaBoost" class="headerlink" title="1.1 AdaBoost"></a>1.1 AdaBoost</h2><p><strong>AdaBoost的做法：</strong></p>
+<p>针对问题1，提高被前一轮弱分类器错误分类的样本的权值，降低分类正确的样本的权值</p>
+<p>针对问题2，组合采用<strong>加权多数表决</strong>的方法</p>
+<p><strong>算法8.1 (AdaBoost)</strong></p>
+<p>输入：训练数据集 $T$ ；弱学习算法</p>
+<p>输出：最终的分类器 $G(x)$</p>
+<ol>
+<li><p>初始化训练数据权值分布<br>$$<br>D_1 = (w_{11}, \cdots, w_{1i}, \cdots, w_{1N}),\quad w_{1i} = \frac{1}{N}, \quad i = 1,2,…,N<br>$$</p>
+</li>
+<li><p>对 $m = 1,2,…, M$</p>
+<p>a. 使用具有权值分布的 $D_m$ 的训练数据集学习得到基本分类器(学习的依据就是分类误差率最小，分类错误的权重和)<br>$$<br>G_m(x) : \mathcal{X} \rightarrow \lbrace c_1,c_2,\cdots, c_k \rbrace<br>$$<br>b.计算 $G_m(x)$ 在训练数据集上的分类误差率<br>$$<br>e_{m}=\sum_{i=1}^{N} P\left(G_{m}\left(x_{i}\right) \neq y_{i}\right)=\sum_{i=1}^{N} w_{mi} I\left(G_{m}\left(x_{i}\right) \neq y_{i}\right)<br>$$<br>c. 计算 $G_m(x)$ 的系数<br>$$<br>\alpha_m = \frac{1}{2} \log(\frac{1-e_m}{e_m})<br>$$<br>这里的对数是自然对数</p>
+<p>d. 更新训练数据集的权值分布<br>$$<br>D_{m+1} = (w_{m+1,1}, …, w_{m+1, i}, …, w_{m+1, N}) \\<br>w_{m+1, i} = \frac{w_{mi}}{Z_m} \exp(-\alpha_m I\left(G_{m}\left(x_{i}\right) = y_{i}\right)), \quad i =1,2,…,N<br>$$<br>这里， $Z_m$规范因子<br>$$<br>Z_m = \sum_{i = 1}^{N}w_{mi}\exp(-\alpha_m I\left(G_{m}\left(x_{i}\right) = y_{i}\right))<br>$$<br>$I\left(G_{m}\left(x_{i}\right) = y_{i}\right)$，当分类正确的时候取1，分类错误取0。二分类时可以 $y_iG_m(x_i)$ 代替</p>
+<p><strong>它使 $D_{m+1}$ 称为一个概率分布</strong></p>
+</li>
+<li><p>构建基本分类器的线性组合<br>$$<br>f(x) = \sum_{m=1}^{M}\alpha_mG_m(x)<br>$$<br>最终得到分类器<br>$$<br>G(x) = \text{sign}(f(x))<br>$$</p>
+</li>
+</ol>
+<blockquote>
+<p>注： $e_m$ 大的，$\alpha_m$ 小，这个时候观察权值的更新公式，对于分子来说，正确率高的，分子小，正确率低的，分子大， 这样就达到了提高被前一轮弱分类器错误分类的样本的权值，降低分类正确的样本的权值的目的</p>
+</blockquote>
+<h3 id="Q：Adaboost终止条件是什么？为什么不容易过拟合？"><a href="#Q：Adaboost终止条件是什么？为什么不容易过拟合？" class="headerlink" title="Q：Adaboost终止条件是什么？为什么不容易过拟合？"></a>Q：Adaboost终止条件是什么？为什么不容易过拟合？</h3><p>有些代码将终止条件设置为一个超参数，即弱分类器的个数。</p>
+<p>为什么不容易过拟合？</p>
+<p>[知乎：俞扬的回答 ](adaboost为什么不容易过拟合呢？ - 俞扬的回答 - 知乎 <a target="_blank" rel="noopener" href="https://www.zhihu.com/question/41047671/answer/127832345">https://www.zhihu.com/question/41047671/answer/127832345</a>)</p>
+<p>Adaboost在实验中表现出更加不容易过拟合（相对于别的boosting方法）的现象，尤其是在实验中发现，迭代中经验误差都已经不变化了的情况下，测试误差居然还能下降一段时间。</p>
+<p>对于二分类问题，AdaBoost的训练误差以指数速率下降就很具有吸引力</p>
+<h2 id="1-2-AdaBoost算法解释"><a href="#1-2-AdaBoost算法解释" class="headerlink" title="1.2 AdaBoost算法解释"></a>1.2 AdaBoost算法解释</h2><p><strong>AdaBoost = 加法模型 + 损失函数(指数函数) + 学习算法(前向分步算法)</strong></p>
+<ul>
+<li>加法模型</li>
+</ul>
+<p>$$<br>f(x) = \sum_{m=1}^{M} \beta_m b(x;\gamma_m)<br>$$</p>
+<ul>
+<li>损失函数</li>
+</ul>
+<p><br>$$<br>L(y,f(x)) = \exp(-yf(x))\\<br>(\alpha_m, G_m(x)) = \arg \min_{\alpha,G}\sum_{i = 1}^{N}\exp[-y_i(f_{m-1}(x_i) +\alpha G(x_i))]<br>$$</p>
+<h2 id="1-3-Adaboost代码实现"><a href="#1-3-Adaboost代码实现" class="headerlink" title="1.3 Adaboost代码实现"></a>1.3 Adaboost代码实现</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 解决的问题：二分类，Y_label = &#123;-1, 1&#125; 这里简化特征X Xi = &#123;0,1&#125; (二值化处理)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 算法实现思路</span></span><br><span class="line"><span class="comment">## 计算分类错误率，输入应该是：数据集和训练好的模弱分类器参数，返回预测结果和分类误差率</span></span><br><span class="line"><span class="comment">## 单层提升树： 输入：数据，权值分布 输出：创建的单层提升树</span></span><br><span class="line"><span class="comment">## 生成提升树：输入：数据， 输出：提升树</span></span><br><span class="line"><span class="comment">## 预测结果</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">calc_e_Gx</span>(<span class="params">X_trainArr, Y_trainArr, n, div, D</span>):</span></span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    计算分类误差率</span></span><br><span class="line"><span class="string">    n，要操作的特征</span></span><br><span class="line"><span class="string">    div，划分的点</span></span><br><span class="line"><span class="string">    D, 权值分布</span></span><br><span class="line"><span class="string">    return 预测结果, 分类误差率</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line">    <span class="comment"># 初始化误差率</span></span><br><span class="line">    e = <span class="number">0</span> </span><br><span class="line">    <span class="comment"># 单独提取X, Y</span></span><br><span class="line">    X_n = X_trainArr[:, n]</span><br><span class="line">    Y_n = Y_trainArr</span><br><span class="line">    predict = []</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(X_n)):</span><br><span class="line">        <span class="keyword">if</span> X_n[i] &lt; div:</span><br><span class="line">            predict[i] = -<span class="number">1</span></span><br><span class="line">            <span class="keyword">if</span> predict[i] != Y_train[i]: e += D[i]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            predict[i] = <span class="number">1</span></span><br><span class="line">            <span class="keyword">if</span> predict[i] != Y_train[i]: e += D[i]</span><br><span class="line">                </span><br><span class="line">    <span class="keyword">return</span> np.array(predict), e</span><br><span class="line">    </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">creatSingleTree</span>(<span class="params">X_trainArr, Y_trainArr, D</span>):</span></span><br><span class="line">    <span class="comment"># 该函数可以用其他弱分类器代替</span></span><br><span class="line">    <span class="comment"># 获得样本数目及特征数量</span></span><br><span class="line">    m, n = np.shape(X_trainArr)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 单层树字典，用于存放当前提升树的参数，包括：分割点，预测结果，误差率(由预测结果计算)，</span></span><br><span class="line">    <span class="comment"># 该单层树所处理的特征 </span></span><br><span class="line">    singleBoostTree = &#123;&#125; </span><br><span class="line">    <span class="comment"># 初始化误差率，最大为100%</span></span><br><span class="line">    singleBoostTree[<span class="string">&#x27;e&#x27;</span>] = <span class="number">1</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 遍历每一个特征，寻找用于划分的最合适的特征</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">        <span class="comment"># 由于特征进行了二值化处理，只能为0、1，因此切分点为 -0.5， 0.5，1.5</span></span><br><span class="line">        <span class="keyword">for</span> div <span class="keyword">in</span> [-<span class="number">0.5</span>, <span class="number">0.5</span>, <span class="number">1.5</span>]:</span><br><span class="line">            Gx, e = calc_e_Gx(X_trainArr, Y_trainArr, i, div, D)</span><br><span class="line">            <span class="keyword">if</span> e &lt; singleBoostTree[<span class="string">&#x27;e&#x27;</span>]:</span><br><span class="line">                singleBoostTree[<span class="string">&#x27;e&#x27;</span>] = e</span><br><span class="line">                singleBoostTree[<span class="string">&#x27;div&#x27;</span>] = div</span><br><span class="line">                singleBoostTree[<span class="string">&#x27;Gx&#x27;</span>] = Gx</span><br><span class="line">                singleBoostTree[<span class="string">&#x27;feature&#x27;</span>] = i</span><br><span class="line">    <span class="keyword">return</span> singleBoostTree</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">creatBoostingTree</span>(<span class="params">X_trainArr, Y_trainArr, treeNum = <span class="number">50</span></span>):</span></span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    treeNum: 弱分类器的数目作为一个超参数，可以通过交叉验证挑选一个最好的</span></span><br><span class="line"><span class="string">    return: 提升树</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line">    m, n = np.shape(X_trainArr)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 初始化权值分布</span></span><br><span class="line">    D = np.array([<span class="number">1</span> / m] * m)</span><br><span class="line">    <span class="comment"># 初始化树列表</span></span><br><span class="line">    iterationNum = <span class="number">0</span></span><br><span class="line">    tree = []</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(treeNum):</span><br><span class="line">        <span class="comment"># 创建当层的提升树</span></span><br><span class="line">        iterationNum += <span class="number">1</span></span><br><span class="line">        curTree = singleBoostTree(X_trainArr, Y_trainArr, D)</span><br><span class="line">        <span class="comment"># 计算alpha</span></span><br><span class="line">        alpha = <span class="number">1</span> / <span class="number">2</span> * np.log((<span class="number">1</span> - curTree[<span class="string">&#x27;e&#x27;</span>]) / curTree[<span class="string">&#x27;e&#x27;</span>])</span><br><span class="line">        Gx = curTree[<span class="string">&#x27;Gx&#x27;</span>]</span><br><span class="line">        D = np.multiply(D, np.exp( -alpha * np.multiply(Y_trainArr, Gx))) / \</span><br><span class="line">            <span class="built_in">sum</span>(np.multiply(D, np.exp( -alpha * np.multiply(Y_trainArr, Gx))))</span><br><span class="line">        curTree[<span class="string">&#x27;alpha&#x27;</span>] = alpha</span><br><span class="line">        tree.append(curTree)</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 当前训练集预测结果</span></span><br><span class="line">        finalpredict += alpha * Gx</span><br><span class="line">        <span class="comment"># 当前预测误差数目</span></span><br><span class="line">        error_count = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(Y_trainArr)):</span><br><span class="line">            <span class="keyword">if</span> np.sign(finalpredict)[i] != Y_trainArr[i]:</span><br><span class="line">                error_count +=  <span class="number">1</span></span><br><span class="line">        </span><br><span class="line">        error_rate = error_count / <span class="built_in">len</span>(Y_trainArr)</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 如果误差已经为0了，那么就可以停止了不用再计算了</span></span><br><span class="line">        <span class="keyword">if</span> error_rate == <span class="number">0</span>: <span class="keyword">return</span> tree</span><br><span class="line">    print(<span class="string">&#x27;Numbers of iteration: &#123;&#125;, \n error rate: &#123;&#125;&#x27;</span>.<span class="built_in">format</span>(iterationNum, error_rate))</span><br><span class="line">    <span class="keyword">return</span> tree</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Gx_predict</span>(<span class="params">x, div, feature</span>):</span></span><br><span class="line">    <span class="keyword">if</span> x[feature] &lt; div:</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">model_predict</span>(<span class="params">X_testArr, tree</span>):</span></span><br><span class="line">    prediction = []</span><br><span class="line">    <span class="comment"># 每一层的tree 有div，alpha，feature</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(X_testArr)):</span><br><span class="line">        result = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> curTree <span class="keyword">in</span> tree:</span><br><span class="line">            div = curTree[<span class="string">&#x27;div&#x27;</span>]</span><br><span class="line">            alpha = curTree[<span class="string">&#x27;alpha&#x27;</span>]</span><br><span class="line">            feature = curTree[<span class="string">&#x27;feature&#x27;</span>]</span><br><span class="line">            result += alpha * Gx_predict(X_testArr[i], div, feature)</span><br><span class="line">        prediction.append(result)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> prediction</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">model_score</span>(<span class="params">X_testArr, Y_testArr, tree</span>):</span></span><br><span class="line">    prediction = model_predict(X_testArr, tree)</span><br><span class="line">    error_count = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(Y_testArr)):</span><br><span class="line">        <span class="keyword">if</span> prediction[i] != Y_testArr[i]:</span><br><span class="line">            error_count += <span class="number">1</span></span><br><span class="line">    score = <span class="number">1</span> - (error_count / <span class="built_in">len</span>(Y_testArr))</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> score</span><br></pre></td></tr></table></figure>
+<h2 id="1-3-boosting-tree"><a href="#1-3-boosting-tree" class="headerlink" title="1.3 boosting tree"></a>1.3 boosting tree</h2><p>以<strong>决策树</strong>为基函数的提升方法称为<strong>提升树</strong>。可以是二叉分类树，或二叉回归树。</p>
+<ul>
+<li><strong>模型</strong></li>
+</ul>
+<p>$$<br>f_M(x) = \sum_{m = 1}^M T(x;\Theta_m)<br>$$</p>
+<p>其中， $T(x;\Theta_m)$ 表示决策树， $\Theta_m$ 为决策树的参数， $M$ 为树的个数</p>
+<ul>
+<li><strong>参数确定</strong>(经验风险极小化)</li>
+</ul>
+<p>$$<br>\hat{\Theta}<em>{m}=\arg \min</em>{\Theta_{m}} \sum_{i=1}^{N} L\left(y_{i}, f_{m-1}\left(x_{i}\right)+T\left(x_{i} ; \Theta_{m}\right)\right)<br>$$</p>
+<ul>
+<li><strong>损失函数</strong><ul>
+<li>平方误差损失函数的回归问题</li>
+<li>指数损失函数的分类问题</li>
+<li>一般损失函数的决策问题</li>
+</ul>
+</li>
+</ul>
+<p>当分类问题是二分类，AdaBoost算法的弱分类器限制为二分类即可，就是boosting tree</p>
+<ul>
+<li><p>回归问题的提升树<br>$$<br>T(x;\Theta)=\sum_{j=1}^{J}c_j I(x \in R_j)<br>$$<br>其中，参数 $\Theta = \lbrace (R_1, c_1), (R_2, c_2),…,(R_J, c_J) \rbrace$ 表示树的区域划分和各区域上的常数， $J$ 是回归树的复杂度即叶结点的个数。</p>
+<ul>
+<li>采用<strong>平方误差损失函数</strong><br>$$<br>\begin{align*}<br>L(y,f_{m-1}(x) + T(x; \Theta_m)) &amp;= [y - f_{m-1}(x) - T(x;\Theta_m)]^2\\<br>&amp;=[r-T(x;\Theta_m)]^2<br>\end{align*}<br>$$<br>所以从损失函数可以看出，当前层树的确定，是通过拟合上一层模型的残差。所以算法可以通过将该层的训练数据给改为残差即可递归得到每一层的tree</li>
+</ul>
+</li>
+<li><p><strong>参数更新(梯度下降)</strong></p>
+</li>
+</ul>
+<p>$$<br>-[\frac{\partial L(y, f(x_i))}{\partial f(x_i)}]<em>{f(x) = f</em>{m-1}(x)}<br>$$</p>
+<h1 id="2-Bagging-Beriman-1996a"><a href="#2-Bagging-Beriman-1996a" class="headerlink" title="2. Bagging[Beriman, 1996a]"></a>2. Bagging[Beriman, 1996a]</h1><p>采用自主抽样法(<strong>bootstrap sampling</strong>)</p>
+<ul>
+<li>确定样本集个数 $m$ </li>
+<li>又放回的抽取 $m$ 个样本</li>
+<li>采样出 $T$ 个含 $m$ 样本的采样集</li>
+<li>然后基于每个样本集训练一个基学习器</li>
+<li>预测可以使用简单投票法</li>
+</ul>
+<p>可以记录一下使用的数据，未被使用的数据可以用来对泛化性能进行“包外估计”</p>
+<p>代码难度不大</p>
+<p>使用random.sample()或者np.random.choice()就可以实现重抽样</p>
+<p>random.sample()默认不重复抽样，可以抽取多维数据</p>
+<p>np.random.choice() 默认重复抽样 replace=True, 不可以抽取多维数据，所以可以用这个函数产生下标。</p>
+<h1 id="3-Random-Forest-RF"><a href="#3-Random-Forest-RF" class="headerlink" title="3. Random Forest(RF)"></a>3. Random Forest(RF)</h1><p>Bagging 的变体，RF在基学习器构建Bagging集成的基础上，进一步在决策树的训练过程中引入了随机属性选择。具体来说， 传统决策树在选择划分属性时是在当前结点的属性集合(假定有d个属性)中选择一个最优属性； 而在RF中， 对基决策树的每个结点， 先从该结点的属性集合中随机选择一个包含k个属性的子集， 然后再从这个子集中选择一个最优属性用于划分。若令$k=d$,则基决策树的构建与传统决策树相同；若令$k = 1$,则是随机选择一个属性用于划分； 一般情况下， 推荐值$k = log_2d$</p>
+<p><strong>算法：</strong></p>
+<p>输入：训练数据 $T$ ，基决策树(CART)，重抽样参数 $m$，属性集合参数 $k$</p>
+<p>输出：最终分类器</p>
+<p>for 1,2,…T</p>
+<p>​        重抽样数据(m个)，记录未被抽取的数据</p>
+<p>​        随机抽取k个属性</p>
+<p>​        根据重抽样的数据和确定的属性，学习基分类器 (如：CART)</p>
+<p>end for</p>
+<p>输出：最终分类器</p>
+<h1 id="4-Stacking"><a href="#4-Stacking" class="headerlink" title="4. Stacking"></a>4. Stacking</h1><ul>
+<li><strong>介绍</strong></li>
+</ul>
+<p><strong>假设是五折的stacking，我们有一个train数据集和一个test数据集，那么一个基本的stacking框架会进行如下几个操作：</strong></p>
+<p>1、选择基模型。我们可以有xgboost，lightGBM，RandomForest，SVM，ANN，KNN，LR等等你能想到的各种基本算法模型。</p>
+<p>2、把训练集分为不交叉的五份。我们标记为train1到train5。</p>
+<p>3、从train1开始作为预测集，使用train2到train5建模(model1)，然后预测train1，并保留结果；然后，以train2作为预测集，使用train1，train3到train5建模，预测train2，并保留结果(model2)；如此进行下去…….直到把train1到train5各预测一遍；</p>
+<p>4、把预测的结果按照train1到trian5的位置对应填补上，得到对train整个数据集在第一个基模型的一个stacking转换。</p>
+<p>5、在上述建立的五个模型过程中，每个模型分别对test数据集进行预测，并最终保留这五列结果，然后对这五列取平均，作为第一个基模型对test数据的一个stacking转换。</p>
+<p>6、然后进入第二层，将新特征作为第二层的train data，第一层的预测结果作为test data</p>
+<p><strong>7、一般使用LR(逻辑回归)作为第二层的模型进行建模预测。</strong></p>
+<p>但使用stacking会比较耗时，所以真正比赛的时候可以改为3折或4折</p>
+<ul>
+<li><strong>Stacking的输出层为什么用逻辑回归？</strong></li>
+</ul>
+<p>stacking的有效性主要来自于特征抽取。<strong>而表示学习中，如影随形的问题就是过拟合，试回想深度学习中的过拟合问题。</strong></p>
+<p>在[5]中，周志华教授也重申了stacking在使用中的过拟合问题。因为第二层的特征来自于对于第一层数据的学习，那么第二层数据中的特征中不该包括原始特征，<strong>以降低过拟合的风险</strong>。举例：</p>
+<ul>
+<li>第二层数据特征：仅包含学习到的特征</li>
+<li>第二层数据特征：包含学习到的特征 + 原始特征</li>
+</ul>
+<p>另一个例子是，stacking中一般都用交叉验证来避免过拟合，足可见这个问题的严重性。</p>
+<p>为了降低过拟合的问题，第二层分类器应该是较为简单的分类器，广义线性如逻辑回归是一个不错的选择。<strong>在特征提取的过程中，我们已经使用了复杂的非线性变换，因此在输出层不需要复杂的分类器</strong>。这一点可以对比神经网络的激活函数或者输出层，都是很简单的函数，一点原因就是不需要复杂函数并能控制复杂度。</p>
+<p>因此，stacking的输出层不需要过分复杂的函数，用逻辑回归还有额外的好处：</p>
+<ul>
+<li>配合L1正则化还可以进一步防止过拟合</li>
+<li>配合L1正则化还可以选择有效特征，从第一层的学习器中删除不必要的分类器，节省运算开销。</li>
+<li>逻辑回归的输出结果还可被理解为概率</li>
+</ul>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p>[1]. <a target="_blank" rel="noopener" href="https://github.com/Dod-o/Statistical-Learning-Method_Code/blob/master/AdaBoost/AdaBoost.py">https://github.com/Dod-o/</a></p>
+<p>[2]. 《统计学习方法》 – 李航</p>
+<p>[3]. 《机器学习》 – 周志华</p>
+<p>[4]. <a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1005304">【SPA大赛】腾讯广告点击大赛：对stacking的一些基本介绍</a></p>
+<p>[5]. Zhou, Z.H., 2012. <em>Ensemble methods: foundations and algorithms</em>. CRC press.</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E3%80%8A%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95%E3%80%8B/" rel="tag"># 《统计学习方法》</a>
+              <a href="/tags/%E3%80%8A%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E3%80%8B/" rel="tag"># 《机器学习》</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/03/18/DecisionTree/" rel="prev" title="DecisionTree">
+      <i class="fa fa-chevron-left"></i> DecisionTree
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-boosting"><span class="nav-number">1.</span> <span class="nav-text">1. boosting</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-AdaBoost"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 AdaBoost</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Q%EF%BC%9AAdaboost%E7%BB%88%E6%AD%A2%E6%9D%A1%E4%BB%B6%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E5%AE%B9%E6%98%93%E8%BF%87%E6%8B%9F%E5%90%88%EF%BC%9F"><span class="nav-number">1.1.1.</span> <span class="nav-text">Q：Adaboost终止条件是什么？为什么不容易过拟合？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-AdaBoost%E7%AE%97%E6%B3%95%E8%A7%A3%E9%87%8A"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 AdaBoost算法解释</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-Adaboost%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 Adaboost代码实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-boosting-tree"><span class="nav-number">1.4.</span> <span class="nav-text">1.3 boosting tree</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Bagging-Beriman-1996a"><span class="nav-number">2.</span> <span class="nav-text">2. Bagging[Beriman, 1996a]</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-Random-Forest-RF"><span class="nav-number">3.</span> <span class="nav-text">3. Random Forest(RF)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-Stacking"><span class="nav-number">4.</span> <span class="nav-text">4. Stacking</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">5.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Guangshan Shui</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Shuigs18" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Shuigs18" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Guangshan Shui</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+<span id="sitetime"></span>
+
+<script language=javascript>
+    function siteTime() {
+        window.setTimeout("siteTime()", 1000);
+        var seconds = 1000;
+        var minutes = seconds * 60;
+        var hours = minutes * 60;
+        var days = hours * 24;
+        var years = days * 365;
+        var today = new Date();
+        var todayYear = today.getFullYear();
+        var todayMonth = today.getMonth() + 1;
+        var todayDate = today.getDate();
+        var todayHour = today.getHours();
+        var todayMinute = today.getMinutes();
+        var todaySecond = today.getSeconds();
+        /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+        year - 作为date对象的年份，为4位年份值
+        month - 0-11之间的整数，做为date对象的月份
+        day - 1-31之间的整数，做为date对象的天数
+        hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+        minutes - 0-59之间的整数，做为date对象的分钟数
+        seconds - 0-59之间的整数，做为date对象的秒数
+        microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+        var t1 = Date.UTC(2020, 12, 25, 03, 16, 00); //北京时间2018-2-13 00:00:00
+        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+        var diff = t2 - t1;
+        var diffYears = Math.floor(diff / years);
+        var diffDays = Math.floor((diff / days) - diffYears * 365);
+        var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+        var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) / minutes);
+        var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours - diffMinutes * minutes) / seconds);
+        document.getElementById("sitetime").innerHTML = "本站已运行 " +diffYears+" 年 "+diffDays + " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+    }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+    siteTime();
+</script>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
