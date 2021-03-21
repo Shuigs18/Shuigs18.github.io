@@ -189,7 +189,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-03-21 14:53:52 / 修改时间：14:55:26" itemprop="dateCreated datePublished" datetime="2021-03-21T14:53:52+08:00">2021-03-21</time>
+              <time title="创建时间：2021-03-21 14:53:52 / 修改时间：15:05:09" itemprop="dateCreated datePublished" datetime="2021-03-21T14:53:52+08:00">2021-03-21</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -257,7 +257,7 @@
 </blockquote>
 <h3 id="Q：Adaboost终止条件是什么？为什么不容易过拟合？"><a href="#Q：Adaboost终止条件是什么？为什么不容易过拟合？" class="headerlink" title="Q：Adaboost终止条件是什么？为什么不容易过拟合？"></a>Q：Adaboost终止条件是什么？为什么不容易过拟合？</h3><p>有些代码将终止条件设置为一个超参数，即弱分类器的个数。</p>
 <p>为什么不容易过拟合？</p>
-<p>[知乎：俞扬的回答 ](adaboost为什么不容易过拟合呢？ - 俞扬的回答 - 知乎 <a target="_blank" rel="noopener" href="https://www.zhihu.com/question/41047671/answer/127832345">https://www.zhihu.com/question/41047671/answer/127832345</a>)</p>
+<p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/41047671/answer/127832345">知乎: 俞扬的回答</a></p>
 <p>Adaboost在实验中表现出更加不容易过拟合（相对于别的boosting方法）的现象，尤其是在实验中发现，迭代中经验误差都已经不变化了的情况下，测试误差居然还能下降一段时间。</p>
 <p>对于二分类问题，AdaBoost的训练误差以指数速率下降就很具有吸引力</p>
 <h2 id="1-2-AdaBoost算法解释"><a href="#1-2-AdaBoost算法解释" class="headerlink" title="1.2 AdaBoost算法解释"></a>1.2 AdaBoost算法解释</h2><p><strong>AdaBoost = 加法模型 + 损失函数(指数函数) + 学习算法(前向分步算法)</strong></p>
@@ -279,7 +279,7 @@
 <ul>
 <li><strong>参数确定</strong>(经验风险极小化)</li>
 </ul>
-<p>$$<br>\hat{\Theta}<em>{m}=\arg \min</em>{\Theta_{m}} \sum_{i=1}^{N} L\left(y_{i}, f_{m-1}\left(x_{i}\right)+T\left(x_{i} ; \Theta_{m}\right)\right)<br>$$</p>
+<p>$$<br>\hat{\Theta_m}=\arg \min_{\Theta_m} \sum_{i=1}^{N} L\left(y_{i}, f_{m-1}\left(x_{i}\right)+T\left(x_{i}; \Theta_{m}\right)\right)<br>$$</p>
 <ul>
 <li><strong>损失函数</strong><ul>
 <li>平方误差损失函数的回归问题</li>
@@ -298,7 +298,7 @@
 <li><p><strong>参数更新(梯度下降)</strong></p>
 </li>
 </ul>
-<p>$$<br>-[\frac{\partial L(y, f(x_i))}{\partial f(x_i)}]<em>{f(x) = f</em>{m-1}(x)}<br>$$</p>
+<p>$$<br>-[\frac{\partial L(y, f(x_i))}{\partial f(x_i)}]<em>{f(x)=f</em>{m-1}(x)}<br>$$</p>
 <h1 id="2-Bagging-Beriman-1996a"><a href="#2-Bagging-Beriman-1996a" class="headerlink" title="2. Bagging[Beriman, 1996a]"></a>2. Bagging[Beriman, 1996a]</h1><p>采用自主抽样法(<strong>bootstrap sampling</strong>)</p>
 <ul>
 <li>确定样本集个数 $m$ </li>
