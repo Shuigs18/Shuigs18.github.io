@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="以清华大学镜像源为例(https:&#x2F;&#x2F;pypi.tuna.tsinghua.edu.cn&#x2F;simple&#x2F;) pypi镜像临时使用1pip install -i https:&#x2F;&#x2F;pypi.tuna.tsinghua.edu.cn&#x2F;simple some_package 设为默认升级pip到最新的版本(&gt;&#x3D;10.0.0)后进行配置 12pip install pip -Upip config s">
+  <meta name="description" content="Homebrew 镜像中科大：https:&#x2F;&#x2F;lug.ustc.edu.cn&#x2F;wiki&#x2F;mirrors&#x2F;help&#x2F;brew.git 清华：https:&#x2F;&#x2F;mirrors.tuna.tsinghua.edu.cn&#x2F;git&#x2F;homebrew&#x2F;homebrew-core.git 阿里：https:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;homebrew&#x2F; 对于bash用户： 12echo &amp;#x27;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="镜像设置">
 <meta property="og:url" content="http://example.com/2021/01/30/%E9%95%9C%E5%83%8F%E8%AE%BE%E7%BD%AE/index.html">
 <meta property="og:site_name" content="水广山">
-<meta property="og:description" content="以清华大学镜像源为例(https:&#x2F;&#x2F;pypi.tuna.tsinghua.edu.cn&#x2F;simple&#x2F;) pypi镜像临时使用1pip install -i https:&#x2F;&#x2F;pypi.tuna.tsinghua.edu.cn&#x2F;simple some_package 设为默认升级pip到最新的版本(&gt;&#x3D;10.0.0)后进行配置 12pip install pip -Upip config s">
+<meta property="og:description" content="Homebrew 镜像中科大：https:&#x2F;&#x2F;lug.ustc.edu.cn&#x2F;wiki&#x2F;mirrors&#x2F;help&#x2F;brew.git 清华：https:&#x2F;&#x2F;mirrors.tuna.tsinghua.edu.cn&#x2F;git&#x2F;homebrew&#x2F;homebrew-core.git 阿里：https:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;homebrew&#x2F; 对于bash用户： 12echo &amp;#x27;">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-01-30T02:33:09.000Z">
-<meta property="article:modified_time" content="2021-01-30T03:34:54.871Z">
+<meta property="article:modified_time" content="2021-06-09T08:53:56.976Z">
 <meta property="article:author" content="Guangshan Shui">
 <meta property="article:tag" content="转载">
 <meta name="twitter:card" content="summary">
@@ -192,10 +192,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-01-30 10:33:09 / 修改时间：11:34:54" itemprop="dateCreated datePublished" datetime="2021-01-30T10:33:09+08:00">2021-01-30</time>
+              <time title="创建时间：2021-01-30 10:33:09" itemprop="dateCreated datePublished" datetime="2021-01-30T10:33:09+08:00">2021-01-30</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-06-09 16:53:56" itemprop="dateModified" datetime="2021-06-09T16:53:56+08:00">2021-06-09</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -224,7 +230,19 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>以清华大学镜像源为例(<a target="_blank" rel="noopener" href="https://pypi.tuna.tsinghua.edu.cn/simple/">https://pypi.tuna.tsinghua.edu.cn/simple/</a>)</p>
+        <h1 id="Homebrew-镜像"><a href="#Homebrew-镜像" class="headerlink" title="Homebrew 镜像"></a>Homebrew 镜像</h1><p>中科大：<a target="_blank" rel="noopener" href="https://lug.ustc.edu.cn/wiki/mirrors/help/brew.git">https://lug.ustc.edu.cn/wiki/mirrors/help/brew.git</a></p>
+<p>清华：<a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git">https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git</a></p>
+<p>阿里：<a target="_blank" rel="noopener" href="https://mirrors.aliyun.com/homebrew/">https://mirrors.aliyun.com/homebrew/</a></p>
+<p>对于bash用户：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.cloud.tencent.com/homebrew-bottles&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">source</span> ~/.bash_profile</span><br></pre></td></tr></table></figure>
+<p>对于zsh用户</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.cloud.tencent.com/homebrew-bottles&#x27;</span> &gt;&gt; ~/.zshrc</span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
+
+
+
+
+<p>作者：码客<br>链接：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/72251385">https://zhuanlan.zhihu.com/p/72251385</a><br>来源：知乎<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+<p>以清华大学镜像源为例(<a target="_blank" rel="noopener" href="https://pypi.tuna.tsinghua.edu.cn/simple/">https://pypi.tuna.tsinghua.edu.cn/simple/</a>)</p>
 <h1 id="pypi镜像"><a href="#pypi镜像" class="headerlink" title="pypi镜像"></a>pypi镜像</h1><h2 id="临时使用"><a href="#临时使用" class="headerlink" title="临时使用"></a>临时使用</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install -i https://pypi.tuna.tsinghua.edu.cn/simple some_package</span><br></pre></td></tr></table></figure>
 <h2 id="设为默认"><a href="#设为默认" class="headerlink" title="设为默认"></a>设为默认</h2><p>升级pip到最新的版本(&gt;=10.0.0)后进行配置</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip install pip -U</span><br><span class="line">pip config <span class="built_in">set</span> <span class="keyword">global</span>.index-url https://pypi.tuna.tsinghua.edu.cn/simple</span><br></pre></td></tr></table></figure>
@@ -331,7 +349,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#pypi%E9%95%9C%E5%83%8F"><span class="nav-number">1.</span> <span class="nav-text">pypi镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%B4%E6%97%B6%E4%BD%BF%E7%94%A8"><span class="nav-number">1.1.</span> <span class="nav-text">临时使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E4%B8%BA%E9%BB%98%E8%AE%A4"><span class="nav-number">1.2.</span> <span class="nav-text">设为默认</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pip%E5%AE%89%E8%A3%85%E6%9C%AC%E5%9C%B0%E5%8C%85"><span class="nav-number">1.3.</span> <span class="nav-text">pip安装本地包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BD%E5%86%85%E5%B8%B8%E7%94%A8PyPI%E9%95%9C%E5%83%8F%E7%BD%91%E7%AB%99"><span class="nav-number">1.4.</span> <span class="nav-text">国内常用PyPI镜像网站</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#conda%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E5%8F%8A%E5%A6%82%E4%BD%95%E5%88%87%E6%8D%A2%E9%95%9C%E5%83%8F"><span class="nav-number">1.5.</span> <span class="nav-text">conda常用命令及如何切换镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">1.6.</span> <span class="nav-text">常用命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Conda%E9%85%8D%E7%BD%AE%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F%E6%BA%90"><span class="nav-number">1.7.</span> <span class="nav-text">Conda配置国内镜像源</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%951%EF%BC%9A%E7%94%A8vim%E6%89%93%E5%BC%80%E6%96%87%E4%BB%B6%EF%BC%8C%E6%B7%BB%E5%8A%A0%E4%BB%A5%E4%B8%8B%E9%95%9C%E5%83%8F%E6%BA%90%E3%80%82%E6%8E%A8%E8%8D%90%E4%BD%BF%E7%94%A8%E4%B8%AD%E7%A7%91%E5%A4%A7%E9%95%9C%E5%83%8F%E6%BA%90"><span class="nav-number">1.7.1.</span> <span class="nav-text">方法1：用vim打开文件，添加以下镜像源。推荐使用中科大镜像源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%952-%E5%9C%A8%E5%91%BD%E4%BB%A4%E7%BB%88%E7%AB%AF%E8%BE%93%E5%85%A5%E4%BB%A5%E4%B8%8B%E5%91%BD%E4%BB%A4%EF%BC%8C%E6%B7%BB%E5%8A%A0%E9%95%9C%E5%83%8F%E6%BA%90"><span class="nav-number">1.7.2.</span> <span class="nav-text">方法2: 在命令终端输入以下命令，添加镜像源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%81%87%E5%88%B0%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98"><span class="nav-number">1.7.3.</span> <span class="nav-text">遇到一些问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%9D%A5%E6%BA%90"><span class="nav-number">1.7.4.</span> <span class="nav-text">参考来源</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Homebrew-%E9%95%9C%E5%83%8F"><span class="nav-number">1.</span> <span class="nav-text">Homebrew 镜像</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pypi%E9%95%9C%E5%83%8F"><span class="nav-number">2.</span> <span class="nav-text">pypi镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%B4%E6%97%B6%E4%BD%BF%E7%94%A8"><span class="nav-number">2.1.</span> <span class="nav-text">临时使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E4%B8%BA%E9%BB%98%E8%AE%A4"><span class="nav-number">2.2.</span> <span class="nav-text">设为默认</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pip%E5%AE%89%E8%A3%85%E6%9C%AC%E5%9C%B0%E5%8C%85"><span class="nav-number">2.3.</span> <span class="nav-text">pip安装本地包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BD%E5%86%85%E5%B8%B8%E7%94%A8PyPI%E9%95%9C%E5%83%8F%E7%BD%91%E7%AB%99"><span class="nav-number">2.4.</span> <span class="nav-text">国内常用PyPI镜像网站</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#conda%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E5%8F%8A%E5%A6%82%E4%BD%95%E5%88%87%E6%8D%A2%E9%95%9C%E5%83%8F"><span class="nav-number">2.5.</span> <span class="nav-text">conda常用命令及如何切换镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">2.6.</span> <span class="nav-text">常用命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Conda%E9%85%8D%E7%BD%AE%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F%E6%BA%90"><span class="nav-number">2.7.</span> <span class="nav-text">Conda配置国内镜像源</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%951%EF%BC%9A%E7%94%A8vim%E6%89%93%E5%BC%80%E6%96%87%E4%BB%B6%EF%BC%8C%E6%B7%BB%E5%8A%A0%E4%BB%A5%E4%B8%8B%E9%95%9C%E5%83%8F%E6%BA%90%E3%80%82%E6%8E%A8%E8%8D%90%E4%BD%BF%E7%94%A8%E4%B8%AD%E7%A7%91%E5%A4%A7%E9%95%9C%E5%83%8F%E6%BA%90"><span class="nav-number">2.7.1.</span> <span class="nav-text">方法1：用vim打开文件，添加以下镜像源。推荐使用中科大镜像源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%952-%E5%9C%A8%E5%91%BD%E4%BB%A4%E7%BB%88%E7%AB%AF%E8%BE%93%E5%85%A5%E4%BB%A5%E4%B8%8B%E5%91%BD%E4%BB%A4%EF%BC%8C%E6%B7%BB%E5%8A%A0%E9%95%9C%E5%83%8F%E6%BA%90"><span class="nav-number">2.7.2.</span> <span class="nav-text">方法2: 在命令终端输入以下命令，添加镜像源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%81%87%E5%88%B0%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98"><span class="nav-number">2.7.3.</span> <span class="nav-text">遇到一些问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%9D%A5%E6%BA%90"><span class="nav-number">2.7.4.</span> <span class="nav-text">参考来源</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -345,7 +363,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-count">12</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -390,7 +408,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
