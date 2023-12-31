@@ -164,6 +164,130 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/02/06/DP-MC-TD/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Guangshan Shui">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="水广山">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/02/06/DP-MC-TD/" class="post-title-link" itemprop="url">DP\MC\TD</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-02-06 16:48:28" itemprop="dateCreated datePublished" datetime="2021-02-06T16:48:28+08:00">2021-02-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-02-07 20:04:50" itemprop="dateModified" datetime="2021-02-07T20:04:50+08:00">2021-02-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ML/" itemprop="url" rel="index"><span itemprop="name">ML</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="1-有模型数值迭代"><a href="#1-有模型数值迭代" class="headerlink" title="1. 有模型数值迭代"></a>1. 有模型数值迭代</h1><h2 id="1-1-主要思想"><a href="#1-1-主要思想" class="headerlink" title="1.1 主要思想"></a>1.1 主要思想</h2><p>有模型数值迭代主要利用<strong>动态规划（Dynamic Programming，DP）</strong>的思想。 </p>
+<p>动态规划迭代算法运用了自益的思想。但在实际问题中，直接使用动态规划算法常出现困难，从下面的状态动作价值迭代可以看出，实际问题的状态空间非常大，仅仅是扫描一遍所有的状态都是不可能的事情。<br>$$<br>q_{pi}(s_t,a_t)=r(s_t,a_t)+\gamma \sum_{s’}p(s’|s_t,a_t)v_{\pi}(s’)<br>$$</p>
+<blockquote>
+<p><strong>自益</strong>：用一个估计值来估计另外一个估计值</p>
+</blockquote>
+<p><strong>方法改进：异步动态规划</strong></p>
+<p>异步动态规划的思想是，每次扫描不再完整的更新一整套状态价值函数，而只是部分更新感兴趣的值。例如，有的状态s不会转移到另一些状态（$p(s’|s,a)=0$$的状态$$s’$）</p>
+<h2 id="1-2-理论基础"><a href="#1-2-理论基础" class="headerlink" title="1.2 理论基础"></a>1.2 理论基础</h2><p>理论基础：<strong>度量空间上的Banach不动点定理</strong></p>
+<p>之所以是有模型的价值迭代，是因为我们知道其动力系统$p(s’|s,a)$，即转移概率，这样我们就可以从从一个确定性策略出发，经过不断策略评估，策略改进……最后收敛到最优策略。背后的数学证明就是度量空间上的Banach不动点定理。</p>
+<p><strong>DP的特点</strong></p>
+<ol>
+<li>利用bootstraping自益的思想</li>
+<li>没有利用异步动态规划的方法，每次迭代需要更新所有的状态</li>
+</ol>
+<h1 id="2-无模型的数值迭代"><a href="#2-无模型的数值迭代" class="headerlink" title="2. 无模型的数值迭代"></a>2. 无模型的数值迭代</h1><h2 id="2-1-Monte-Carlo-MC"><a href="#2-1-Monte-Carlo-MC" class="headerlink" title="2.1 Monte Carlo(MC)"></a>2.1 Monte Carlo(MC)</h2><p><strong>基本思想</strong>：利用MC估计期望值$V_{\pi}(s)$和$Q_{\pi}(s,a)$</p>
+<p>举例：对于一个具体的策略$\pi$来说，利用这个策略玩n个回合</p>
+<p>$S_0^1=s,A_0^1=a,R_1^1,S_1^1,A_1^1,R_2^1…… \qquad G^1$</p>
+<p>$S_0^2=s,A_0^2=a,R_1^2,S_1^2,A_1^2,R_2^2…… \qquad G^2$</p>
+<p>$……$</p>
+<p>$S_0^n,A_0^n,R_1^n,S_1^n,A_1^n,R_2^n…… \qquad G^n$</p>
+<p>利用Monte Carlo来估计价值函数$V_{\pi}(s)=\frac{1}{k}(G^1+G^2+……)$，从相同状态s出发的回合累计回报平均值。$Q_{\pi}(s,a)=\frac{1}{k}(G^1+G^2+……)$，从相同状态动作对出发的回合累计回报平均值。</p>
+<p>利用Monte Carlo进行更新，实际应用中又分为<strong>每次访问回合更新</strong>和<strong>首次访问回合更新</strong></p>
+<p><strong>MC的特点</strong></p>
+<ol>
+<li>没有利用自益的思想</li>
+<li>利用经验平均回报的方法来估计</li>
+<li><strong>局限</strong>：只能用在有终止的MDP，每一步的<strong>R</strong> 都是一个变量，累积后的G方差较大。</li>
+<li>每个回合只需要更新一条该回合轨迹上的状态</li>
+</ol>
+<h2 id="2-2-Temporal-Difference-TD"><a href="#2-2-Temporal-Difference-TD" class="headerlink" title="2.2 Temporal Difference(TD)"></a>2.2 Temporal Difference(TD)</h2><h3 id="2-2-1-TD-n"><a href="#2-2-1-TD-n" class="headerlink" title="2.2.1 TD(n)"></a>2.2.1 TD(n)</h3><p>对于状态价值来说，n步时序差分$TD(n)$目标为：</p>
+<p>$U_{t:t+n}^{(v)}=R_{t+1}+\gamma R_{t+2}+…+\gamma ^nq(S_{t+n},A_{t+n})$</p>
+<img src="http://ww1.sinaimg.cn/large/0088OO84ly1gnf7vtk8jej30rj0o0di4.jpg" alt="TD(n)" style="zoom:50%;" />
+
+<p>对于动作状态价值来说，将上图的白圆和黑圆互换。以TD(0)为例，更新动作状态价值可以表示为<br>$$<br>U_t=R_{t+1}+\gamma q(S_{t+1},A_{t+1}) \<br>q(S_t,A_t)\gets q(S_t,A_t)+\alpha[U_t-q(S_t,A_t)]<br>$$<br>从上式可以看出，TD(n)是利用了<strong>自益</strong>的思想。</p>
+<p>对于时序差分来说<br>$$<br>q_{target}(S_t,A_t)=E[R_{t+1}+ q(S_{t+1},A_{t+1}]<br>$$<br>在实际应用中我们用<br>$$<br>U_t=R_{t+1}+\gamma q(S_{t+1},A_{t+1})\approx q_{target}(S_t,A_t)<br>$$</p>
+<h3 id="2-2-2-SARSA"><a href="#2-2-2-SARSA" class="headerlink" title="2.2.2 SARSA"></a>2.2.2 SARSA</h3><ol>
+<li><p>单步SARSA：单步时序差分目标（策略评估） +  策略改进</p>
+</li>
+<li><p>多步SARSA：多步时序差分目标（策略评估） +  策略改进</p>
+</li>
+<li><p><strong>期望SARSA</strong>：$U_t=R_{t+1}+\gamma \sum_{a\in \mathcal{A}}\pi(a|S_{t+1})q(S_{t+1},a)$ 也有单步和多步</p>
+</li>
+</ol>
+<p><strong>TD</strong>的特点：</p>
+<ol>
+<li>可以从不完整的轨迹中学习</li>
+<li>介于MC和DP之间的方法</li>
+<li>有sampling（期望的近似）和bootstraping</li>
+<li>方差较于MC更小</li>
+<li>可以在线学习，每走一步就更新</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/01/30/%E9%95%9C%E5%83%8F%E8%AE%BE%E7%BD%AE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -304,7 +428,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-30 11:35:07" itemprop="dateModified" datetime="2021-01-30T11:35:07+08:00">2021-01-30</time>
+                <time title="修改时间：2021-03-11 21:05:43" itemprop="dateModified" datetime="2021-03-11T21:05:43+08:00">2021-03-11</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -459,7 +583,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
